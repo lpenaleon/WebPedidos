@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<WebPedidos.Models.ContactoClie>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Contacto por Cliente</h2>
+
+<p>
+    @Html.ActionLink("Crear un Nuevo", "Create",new { },new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Clientes.ideNIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NomContacto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clientes.ideNIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomContacto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Modificar", "Edit", new { id=item.idContactoClie },new { @class = "btn btn-xs btn-success" }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.idContactoClie },new { @class= "btn btn-xs btn-default" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.idContactoClie },new{ @class= "btn btn-xs btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+<div class="col-md-2">
+    Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+</div>
+<div class="col-md-10">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+        ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+</div>

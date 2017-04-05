@@ -1,0 +1,48 @@
+﻿@model WebPedidos.Models.Empleado
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar un Empleado</h2>
+
+<h3>¿Está seguro de que quiere eliminar esto?</h3>
+<div>
+    @*<h4>Empleado</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargos.NomCargo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargos.NomCargo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

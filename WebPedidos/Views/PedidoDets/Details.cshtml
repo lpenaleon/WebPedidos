@@ -1,0 +1,50 @@
+﻿@model WebPedidos.Models.PedidoDet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Detalles de un Pedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTotal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button type="button" class="btn btn-xs btn-default">@Html.ActionLink("Modificar", "Edit", new { id = Model.idPedido })</button> |
+    <button type="button" class="btn btn-xs btn-default">@Html.ActionLink("Volver a la Lista", "Index")</button>
+</p>

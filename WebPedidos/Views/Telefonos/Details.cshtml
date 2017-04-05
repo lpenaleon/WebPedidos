@@ -1,0 +1,42 @@
+﻿@model WebPedidos.Models.Telefono
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles del Teléfono </h2>
+
+<div>
+    @*<h4>Teléfono</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoTels.NomTipoTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoTels.NomTipoTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idContactoCli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idContactoCli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumTel)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdTelefono },new { @class ="btn btn-success"}) |
+    @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default" })
+</p>

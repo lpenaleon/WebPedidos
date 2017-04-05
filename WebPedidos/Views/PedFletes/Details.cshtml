@@ -1,0 +1,58 @@
+﻿@model WebPedidos.Models.PedFlete
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Flete de un Pedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpTrans.NomEmpTran)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpTrans.NomEmpTran)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pedidos.idPedido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pedidos.idPedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idFlete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idFlete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Obervaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obervaciones)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button type="button" class="btn btn-xs btn-default">@Html.ActionLink("Modificar", "Edit", new { id = Model.idPedFlete })</button> |
+    <button type="button" class="btn btn-xs btn-default">@Html.ActionLink("Volver a la Lista", "Index")</button>
+</p>

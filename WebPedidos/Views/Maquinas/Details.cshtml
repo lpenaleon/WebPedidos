@@ -1,0 +1,26 @@
+﻿@model WebPedidos.Models.Maquina
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de una Máquina</h2>
+
+<div>
+    @*<h4>Máquina</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomMaquina)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomMaquina)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdMaquina },new { @class="btn btn-success"}) |
+    @Html.ActionLink("Volver a la Lista", "Index", new { }, new { @class = "btn btn-default" })
+</p>

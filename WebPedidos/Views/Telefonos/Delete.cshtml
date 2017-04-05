@@ -1,0 +1,48 @@
+﻿@model WebPedidos.Models.Telefono
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar un Teléfono</h2>
+
+<h3>Esta seguro de querer Eliminar esto?</h3>
+<div>
+    @*<h4>Teléfono</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoTels.NomTipoTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoTels.NomTipoTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idContactoCli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idContactoCli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumTel)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

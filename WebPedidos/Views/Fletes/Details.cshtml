@@ -1,0 +1,26 @@
+﻿@model WebPedidos.Models.Flete
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de un Flete</h2>
+
+<div>
+    @*<h4>Flete</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomFlete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomFlete)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdFlete },new { @class = "btn btn-success" }) |
+    @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default"})
+</p>

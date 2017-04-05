@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebPedidos.Models.Empleado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Empleado</h2>
+
+<p>
+    @Html.ActionLink("Crear un Nuevo", "Create", new { }, new { @class = "btn btn-sm btn-primary" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cargos.NomCargo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cargos.NomCargo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.ActionLink("Modificar", "Edit", new { id = item.idEmpleado }, new { @class = "btn btn-sm btn-success" }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.idEmpleado }, new { @class = "btn btn-sm btn-default" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.idEmpleado }, new { @class = "btn btn-sm btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

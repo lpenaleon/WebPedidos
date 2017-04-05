@@ -1,0 +1,56 @@
+﻿@model WebPedidos.Models.PedidoDet
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Está seguro de que quierer elimina esto?</h3>
+<div>
+    <h4>PedidoDet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTotal)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            <button type="button" class="btn btn-default">@Html.ActionLink("Volver a la Lista", "Index")</button>
+        </div>
+    }
+</div>

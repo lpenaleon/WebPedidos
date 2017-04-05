@@ -1,0 +1,42 @@
+﻿@model WebPedidos.Models.Municipio
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles del Municipio</h2>
+
+<div>
+    @*<h4>Municipio</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Departamentos.NomDepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departamentos.NomDepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codMunicipio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codMunicipio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomMunicipio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomMunicipio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.idMunicipio },new { @class="btn btn-success"}) |
+    @Html.ActionLink("Volver a Lista", "Index",new { },new { @class = "btn btn-default" })
+</p>

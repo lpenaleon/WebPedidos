@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebPedidos.Models.TipoTel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tipo de Teléfono</h2>
+
+<p>
+    @Html.ActionLink("Crear un Nuevo", "Create",new { }, new { @class = "btn btn-sm btn-primary" })
+</p>
+<table class = "table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomTipoTel)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomTipoTel)
+        </td>
+        <td >
+            @Html.ActionLink("Modificar", "Edit", new { id = item.idTipoTel }, new { @class = "btn btn-sm btn-success" }) |
+            @Html.ActionLink("Detalle", "Details", new { id = item.idTipoTel }, new { @class = "btn btn-sm btn-default" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.idTipoTel }, new { @class = "btn btn-sm btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

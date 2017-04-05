@@ -1,0 +1,26 @@
+﻿@model WebPedidos.Models.Marca
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de la Marca</h2>
+
+<div>
+    @*<h4>Marca</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomMarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomMarca)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.idMarca }, new { @class = "btn btn-sm btn-success" }) |
+    @Html.ActionLink("Volver a la Lista", "Index",new { }, new { @class = "btn btn-sm btn-default" })
+</p>

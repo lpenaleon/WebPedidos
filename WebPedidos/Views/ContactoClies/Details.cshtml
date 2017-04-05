@@ -1,0 +1,42 @@
+﻿@model WebPedidos.Models.ContactoClie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Contacto por Cliente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Clientes.ideNIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clientes.ideNIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomContacto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomContacto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.idContactoClie }, new { @class = "btn btn-danger" }) |
+    @Html.ActionLink("Volver a la Lista", "Index",new { }, new { @class = "btn btn-default" })
+</p>

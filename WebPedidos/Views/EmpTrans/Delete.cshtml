@@ -1,0 +1,32 @@
+﻿@model WebPedidos.Models.EmpTran
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar la Empresa Transportadora</h2>
+
+<h3>¿Está seguro de que quiere eliminar esto?</h3>
+<div>
+    @*<h4>Empresa Transportadora</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomEmpTran)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomEmpTran)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

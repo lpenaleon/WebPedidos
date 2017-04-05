@@ -1,0 +1,94 @@
+﻿@model WebPedidos.Models.Producto
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar un Producto</h2>
+<h3>¿Está seguro de que quiere eliminar esto?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Maquinas.NomMaquina)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Maquinas.NomMaquina)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marcas.NomMarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marcas.NomMarca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empaque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empaque)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.iva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iva)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RutaFoto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RutaFoto)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

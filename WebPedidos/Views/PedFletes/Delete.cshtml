@@ -1,0 +1,64 @@
+﻿@model WebPedidos.Models.PedFlete
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Está seguro de que quierer elimina esto?</h3>
+<div>
+    <h4>PedFlete</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpTrans.NomEmpTran)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpTrans.NomEmpTran)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pedidos.idPedido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pedidos.idPedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idFlete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idFlete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Obervaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obervaciones)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            <button type="button" class="btn btn-default">@Html.ActionLink("Volver a la Lista", "Index")</button>
+        </div>
+    }
+</div>
