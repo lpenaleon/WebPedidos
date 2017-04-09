@@ -23,7 +23,7 @@ namespace WebPedidos.Controllers
                 .Include(p => p.Marcas)
                 .OrderBy(p => p.Descripcion);
 
-            return View(productos.ToPagedList((int)page, 50));
+            return View(productos.ToPagedList((int)page, 8));
         }
 
         // GET: Productos/Details/5
@@ -41,6 +41,7 @@ namespace WebPedidos.Controllers
             return View(producto);
         }
 
+        
         // GET: Productos/Create
         public ActionResult Create()
         {
@@ -119,7 +120,6 @@ namespace WebPedidos.Controllers
                 RutaFoto =view.RutaFoto,
             };
         }
-
         // GET: Productos/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -142,7 +142,6 @@ namespace WebPedidos.Controllers
 
             return View(view);
         }
-
         private ProductoView toView(Producto producto)
         {
             return new ProductoView

@@ -19,12 +19,21 @@ namespace WebPedidos.Models
         public WebPedidosContext() : base("WebPedidosContext")
         {
         }
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        { 
+     //       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvertion>();
+        }
         //cierra db
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Conventions.Remove < OneToManyCascadeDeleteConvertion>();
+            
+        //}
 
         public System.Data.Entity.DbSet<WebPedidos.Models.Maquina> Maquinas { get; set; }
 

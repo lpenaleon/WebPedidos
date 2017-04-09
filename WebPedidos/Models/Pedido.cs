@@ -7,10 +7,13 @@ using System.Web;
 
 namespace WebPedidos.Models
 {
+    [Table("Pedidos")]
     public class Pedido
     {
         [Key]
         public long idPedido { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
         public double acumulado { get; set; }
         public double IVA { get; set; }

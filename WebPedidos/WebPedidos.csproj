@@ -242,6 +242,7 @@
     <Compile Include="Models\Maquina.cs" />
     <Compile Include="Models\Marca.cs" />
     <Compile Include="Models\Municipio.cs" />
+    <Compile Include="Models\OneToManyCascadeDeleteConvertion.cs" />
     <Compile Include="Models\PedFlete.cs" />
     <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\PedidoDet.cs" />
