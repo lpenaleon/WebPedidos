@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -21,19 +22,14 @@ namespace WebPedidos.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         { 
-     //       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvertion>();
+         //  modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvertion>();
         }
+
         //cierra db
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove < OneToManyCascadeDeleteConvertion>();
-            
-        //}
 
         public System.Data.Entity.DbSet<WebPedidos.Models.Maquina> Maquinas { get; set; }
 
