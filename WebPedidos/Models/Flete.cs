@@ -16,7 +16,6 @@ namespace WebPedidos.Models
         [StringLength(14, ErrorMessage = "El campo {0} debe contener maximo {1} y minimo {2}", MinimumLength = 5)]
         public string NomFlete { get; set; }
         //uno a muchos
-        public virtual PedFlete PedFletes { get; set; }
-
+        public virtual ICollection<PedFlete> PedFletes { get; set; }
     }
 }

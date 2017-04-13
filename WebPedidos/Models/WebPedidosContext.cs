@@ -21,8 +21,8 @@ namespace WebPedidos.Models
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        { 
-         //  modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvertion>();
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();            
         }
 
         //cierra db
@@ -62,5 +62,7 @@ namespace WebPedidos.Models
         public System.Data.Entity.DbSet<WebPedidos.Models.PedFlete> PedFletes { get; set; }
 
         public System.Data.Entity.DbSet<WebPedidos.Models.ContactoClie> ContactoClies { get; set; }
+
+        public System.Data.Entity.DbSet<WebPedidos.Models.TipoIde> TipoIdes { get; set; }
     }
 }

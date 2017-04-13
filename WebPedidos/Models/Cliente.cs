@@ -12,10 +12,14 @@ namespace WebPedidos.Models
         public int idCliente { get; set; }
 
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [Display(Name = "Tipo de Identificación")]
+        public int idTipoIde { get; set; }
+
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Identificación")]
         [RegularExpression(@"[0-9]{1,9}(\.[0-9]{0,2})?$", ErrorMessage = "Por favor revise la Identificación o NIT")]
         [StringLength(14, ErrorMessage = "El campo {0} debe contener maximo {1} y minimo {2}", MinimumLength = 5)]
-        public string ideNIT { get; set; }
+        public string NumIde { get; set; }
 
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Cliente")]
@@ -25,6 +29,7 @@ namespace WebPedidos.Models
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         public int idMunicipio { get; set; }
 
+        [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Dirección")]
         [StringLength(60, ErrorMessage = "El campo {0} debe contener maximo {1} y minimo {2}", MinimumLength = 5)]
@@ -39,6 +44,8 @@ namespace WebPedidos.Models
         //muchos a uno
         public virtual Municipio Municipios { get; set; } //Muchos a uno      
         public virtual Empleado Empleados { get; set; }//Muchos a uno
+        public virtual TipoIde TipoIdes { get; set; }
+
         //uno a muchos
         public virtual ICollection<ContactoClie> ContactoClies { get; set; }//Uno a muchos
         public virtual ICollection<Pedido> Pedidos { get; set; } //Uno a muchos

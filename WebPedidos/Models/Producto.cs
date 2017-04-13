@@ -25,10 +25,12 @@ namespace WebPedidos.Models
         [StringLength(60, ErrorMessage = "El campo {0} debe contener maximo {1} y minimo {2}", MinimumLength = 5)]
         public string Descripcion { get; set; }
 
+        [DataType(DataType.Currency)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode =false)]
-        public double Precio { get; set; }
+        public decimal Precio { get; set; }
 
+        [DataType(DataType.Currency)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString ="{0:P2}",ApplyFormatInEditMode =false)]
         public float iva { get; set; }
@@ -49,11 +51,7 @@ namespace WebPedidos.Models
         //muchos a uno
         public virtual Marca Marcas { get; set; }
         public virtual Maquina Maquinas { get; set; }
-
         //uno a muchos 
         public virtual ICollection<PedidoDet> PedidoDets { get; set; }
-
-
-
     }
 }

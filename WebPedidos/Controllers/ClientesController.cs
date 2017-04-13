@@ -1,5 +1,4 @@
-﻿using PagedList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,12 +15,17 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: Clientes
-        public ActionResult Index(int? page = null) //paginación
-        { 
-            page = (page ?? 1);
+        public ActionResult Index()
+        {
+          //  View(db.Departamentos.OrderBy(d => d.NomDepto).ToPagedList((int)page, 8));
+            var clientes = db.Clientes.OrderBy(cl =>cl.NomClie).
+                Include(em => em.Empleados).
+                Include(mu => mu.Municipios).
+                Include(ti => ti.TipoIdes);
 
-            var clientes = db.Clientes.OrderBy(cl => cl.NomClie).Include(c => c.Empleados).Include(c => c.Municipios);
-            return View(clientes.ToPagedList((int)page, 8)); //arreglo de paginación cambio de .ToList()) por ToPagedList((int)page, 8)); 
+            //   Include("TipoIdes").GroupBy(ti => ti.TipoIdes);
+
+            return View(clientes.ToList());
         }
 
         // GET: Clientes/Details/5
@@ -44,6 +48,7 @@ namespace WebPedidos.Controllers
         {
             ViewBag.idEmpleado = new SelectList(db.Empleados, "idEmpleado", "Nombre");
             ViewBag.idMunicipio = new SelectList(db.Municipios, "idMunicipio", "NomMunicipio");
+            ViewBag.idTipoIde = new SelectList(db.TipoIdes, "idTipoIde", "NomTipoIde");
             return View();
         }
 
@@ -52,7 +57,7 @@ namespace WebPedidos.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCliente,ideNIT,NomClie,idMunicipio,Direccion,idEmpleado,Estado")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "idCliente,idTipoIde,Numide,NomClie,idMunicipio,Direccion,Estado,idEmpleado")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +68,7 @@ namespace WebPedidos.Controllers
 
             ViewBag.idEmpleado = new SelectList(db.Empleados, "idEmpleado", "Nombre", cliente.idEmpleado);
             ViewBag.idMunicipio = new SelectList(db.Municipios, "idMunicipio", "NomMunicipio", cliente.idMunicipio);
+            ViewBag.idTipoIde = new SelectList(db.TipoIdes, "idTipoIde", "NomTipoIde", cliente.idTipoIde);
             return View(cliente);
         }
 
@@ -80,6 +86,7 @@ namespace WebPedidos.Controllers
             }
             ViewBag.idEmpleado = new SelectList(db.Empleados, "idEmpleado", "Nombre", cliente.idEmpleado);
             ViewBag.idMunicipio = new SelectList(db.Municipios, "idMunicipio", "NomMunicipio", cliente.idMunicipio);
+            ViewBag.idTipoIde = new SelectList(db.TipoIdes, "idTipoIde", "NomTipoIde", cliente.idTipoIde);
             return View(cliente);
         }
 
@@ -88,7 +95,7 @@ namespace WebPedidos.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCliente,ideNIT,NomClie,idMunicipio,Direccion,idEmpleado,Estado")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "idCliente,idTipoIde,Numide,NomClie,idMunicipio,Direccion,Estado,idEmpleado")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -98,6 +105,7 @@ namespace WebPedidos.Controllers
             }
             ViewBag.idEmpleado = new SelectList(db.Empleados, "idEmpleado", "Nombre", cliente.idEmpleado);
             ViewBag.idMunicipio = new SelectList(db.Municipios, "idMunicipio", "NomMunicipio", cliente.idMunicipio);
+            ViewBag.idTipoIde = new SelectList(db.TipoIdes, "idTipoIde", "NomTipoIde", cliente.idTipoIde);
             return View(cliente);
         }
 

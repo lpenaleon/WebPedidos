@@ -18,8 +18,9 @@ namespace WebPedidos.Models
         public string Obervaciones { get; set; }
 
         //muchos a uno
-        public virtual ICollection<Flete> Fletes { get; set; }
+        public virtual Flete Fletes { get; set; }
         public virtual EmpTran EmpTrans { get; set; }
         public virtual Pedido Pedidos { get; set; }
+
     }
 }
