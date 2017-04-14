@@ -21,14 +21,17 @@ namespace WebPedidos.Models
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public double acumulado { get; set; }
+
         public double vrIVA { get; set; }
         public int dCred { get; set; }
         public int idCliente { get; set; }
         public int idFormPago { get; set; }
+        public OrdenEstado OrdenEstado { get; set; }
+
         //Muchos a uno
-        public virtual Cliente Clientes { get; set; }
-        public virtual FormPago FormPagos { get; set; }
-        public virtual OrdenEstado OrdenEstado { get; set; }
+        public virtual Cliente Cliente { get; set; }
+        public virtual FormPago FormPago { get; set; }
+        
         //uno a muchos
         public virtual ICollection<PedFlete> PedFletes { get; set; }
         public virtual ICollection<PedidoDet> PedidoDets { get; set; }

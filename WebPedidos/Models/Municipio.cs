@@ -7,6 +7,7 @@ using System.Web;
 
 namespace WebPedidos.Models
 {
+    [Table("Municipios")]
     public class Municipio
     {
         [Key]
@@ -27,7 +28,8 @@ namespace WebPedidos.Models
         // Relaciones
         
         //muchos a uno
-        public virtual Departamento Departamentos { get; set; }//mucho a uno
+        public virtual Departamento Departamento { get; set; }//mucho a uno
+
         //uno a muchos
         public virtual ICollection<Cliente> Clientes { get; set; }//Uno a muchos
 

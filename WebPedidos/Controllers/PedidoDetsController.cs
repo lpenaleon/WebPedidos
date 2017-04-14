@@ -17,7 +17,7 @@ namespace WebPedidos.Controllers
         // GET: PedidoDets
         public ActionResult Index()
         {
-            var pedidoDets = db.PedidoDets.Include(p => p.Productos);
+            var pedidoDets = db.PedidoDets.Include(p => p.Producto);
             return View(pedidoDets.ToList());
         }
 

@@ -19,7 +19,7 @@ namespace WebPedidos.Controllers
         public ActionResult Index(int? page = null)
         {
             page = (page ?? 1);
-            var municipios = db.Municipios.OrderBy(mn => mn.NomMunicipio).Include(m => m.Departamentos);
+            var municipios = db.Municipios.OrderBy(mn => mn.NomMunicipio).Include(m => m.Departamento);
             return View(municipios.ToPagedList((int)page, 8));
         }
 

@@ -17,7 +17,7 @@ namespace WebPedidos.Controllers
         // GET: Empleados
         public ActionResult Index()
         {
-            var empleados = db.Empleados.OrderBy(em => em.Apellidos+em.Nombre).Include(e => e.Cargos);
+            var empleados = db.Empleados.OrderBy(em => em.Apellidos+em.Nombre).Include(e => e.Cargo);
             return View(empleados.ToList());
         }
 

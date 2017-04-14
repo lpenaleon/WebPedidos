@@ -17,7 +17,7 @@ namespace WebPedidos.Controllers
         // GET: PedFletes
         public ActionResult Index()
         {
-            var pedFletes = db.PedFletes.Include(p => p.EmpTrans).Include(p => p.Pedidos);
+            var pedFletes = db.PedFletes.Include(p => p.EmpTran).Include(p => p.Pedido);
             return View(pedFletes.ToList());
         }
 

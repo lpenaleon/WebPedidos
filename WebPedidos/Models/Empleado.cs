@@ -33,8 +33,7 @@ namespace WebPedidos.Models
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         public int idCargo { get; set; }
 
-
-        public virtual Cargo Cargos { get; set; }
+        public virtual Cargo Cargo { get; set; }
 
         public virtual ICollection<Cliente> Clientes { get; set; }
     }

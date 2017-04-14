@@ -7,6 +7,7 @@ using System.Web;
 
 namespace WebPedidos.Models
 {
+    [Table("PedFletes")]
     public class PedFlete
     {
         [Key]
@@ -18,9 +19,9 @@ namespace WebPedidos.Models
         public string Obervaciones { get; set; }
 
         //muchos a uno
-        public virtual Flete Fletes { get; set; }
-        public virtual EmpTran EmpTrans { get; set; }
-        public virtual Pedido Pedidos { get; set; }
+        public virtual Flete Flete { get; set; }
+        public virtual EmpTran EmpTran { get; set; }
+        public virtual Pedido Pedido { get; set; }
 
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace WebPedidos.Models
 {
+    [Table("Clientes")]
     public class Cliente
     {
         [Key]
@@ -42,9 +44,9 @@ namespace WebPedidos.Models
         [Display(Name = "Vendedor")]
         public int idEmpleado { get; set; }
         //muchos a uno
-        public virtual Municipio Municipios { get; set; } //Muchos a uno      
-        public virtual Empleado Empleados { get; set; }//Muchos a uno
-        public virtual TipoIde TipoIdes { get; set; }
+        public virtual Municipio Municipio { get; set; } //Muchos a uno      
+        public virtual Empleado Empleado { get; set; }//Muchos a uno
+        public virtual TipoIde TipoIde { get; set; }
 
         //uno a muchos
         public virtual ICollection<ContactoClie> ContactoClies { get; set; }//Uno a muchos

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,17 +16,16 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
-          //  View(db.Departamentos.OrderBy(d => d.NomDepto).ToPagedList((int)page, 8));
+            page = (page ?? 1);
             var clientes = db.Clientes.OrderBy(cl =>cl.NomClie).
-                Include(em => em.Empleados).
-                Include(mu => mu.Municipios).
-                Include(ti => ti.TipoIdes);
+                Include(em => em.Empleado).
+                Include(mu => mu.Municipio).
+                Include(ti => ti.TipoIde);
 
-            //   Include("TipoIdes").GroupBy(ti => ti.TipoIdes);
 
-            return View(clientes.ToList());
+            return View(clientes.ToPagedList((int)page, 8));
         }
 
         // GET: Clientes/Details/5
@@ -48,7 +48,12 @@ namespace WebPedidos.Controllers
         {
             ViewBag.idEmpleado = new SelectList(db.Empleados, "idEmpleado", "Nombre");
             ViewBag.idMunicipio = new SelectList(db.Municipios, "idMunicipio", "NomMunicipio");
-            ViewBag.idTipoIde = new SelectList(db.TipoIdes, "idTipoIde", "NomTipoIde");
+            //Include("TipoIdes").GroupBy(ti => ti.TipoIdes);
+
+            var list = db.TipoIdes.ToList();
+            list.Add(new TipoIde { idTipoIde = 1, NomTipoIde ="[Selecione un tipo de Documento]" });
+            list = list.OrderBy(t => t.NomTipoIde).ToList(); 
+            ViewBag.idTipoIde = new SelectList(list, "idTipoIde", "NomTipoIde");
             return View();
         }
 

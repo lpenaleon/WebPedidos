@@ -7,6 +7,7 @@ using System.Web;
 
 namespace WebPedidos.Models
 {
+    [Table("PedidoDet")]
     public class PedidoDet
     {
         [Key]
@@ -30,7 +31,7 @@ namespace WebPedidos.Models
         public float Cantidad { get; set; }
 
         //muchos a uno
-        public virtual Pedido Pedidos { get; set; }
-        public virtual Producto Productos { get; set; }
+        public virtual Pedido Pedido { get; set; }
+        public virtual Producto Producto { get; set; }
     }
 }

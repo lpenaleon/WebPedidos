@@ -248,7 +248,6 @@
     <Compile Include="Models\PedFlete.cs" />
     <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\PedidoDet.cs" />
-    <Compile Include="Models\PedidoView.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Telefono.cs" />
     <Compile Include="Models\TipoTel.cs" />
@@ -394,12 +393,12 @@
     <Content Include="Views\Telefonos\Details.cshtml" />
     <Content Include="Views\Telefonos\Edit.cshtml" />
     <Content Include="Views\Telefonos\Index.cshtml" />
-    <Content Include="Views\Pedidos\NewPedido.cshtml" />
     <Content Include="Views\Clientes\Create.cshtml" />
     <Content Include="Views\Clientes\Delete.cshtml" />
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Pedidos\NewPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

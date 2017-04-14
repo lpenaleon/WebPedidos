@@ -19,7 +19,7 @@ namespace WebPedidos.Controllers
         public ActionResult Index(int? page = null)
         {
             page = (page ?? 1);
-            var contClies = db.ContactoClies.OrderBy(CC => CC.NomContacto).Include(cl => cl.Clientes);
+            var contClies = db.ContactoClies.OrderBy(CC => CC.NomContacto).Include(cl => cl.Cliente);
             return View(contClies.ToPagedList((int)page, 8));
         }
 
