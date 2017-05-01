@@ -17,13 +17,21 @@ namespace WebPedidos.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaPedido { get; set; }
-
+        
+        [NotMapped]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public double acumulado { get; set; }
+        public double AcuPrecio { get; set; }
 
+        [NotMapped]
         public double vrIVA { get; set; }
-        public int dCred { get; set; }
+
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [Display(Name = "Días de Credito")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+
+        public byte DiasCred { get; set; }
         public int idCliente { get; set; }
         public int idFormPago { get; set; }
         public OrdenEstado OrdenEstado { get; set; }
@@ -35,8 +43,5 @@ namespace WebPedidos.Models
         //uno a muchos
         public virtual ICollection<PedFlete> PedFletes { get; set; }
         public virtual ICollection<PedidoDet> PedidoDets { get; set; }
-
-
     }
-
 }

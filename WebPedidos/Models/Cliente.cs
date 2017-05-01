@@ -43,6 +43,18 @@ namespace WebPedidos.Models
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Vendedor")]
         public int idEmpleado { get; set; }
+
+        [NotMapped]
+        public string NomClieConca { get { return string.Format("{0} - {1} - {2}", NomClie, idMunicipio, Direccion);}set { NomClieConca = value;  } }
+
+        [NotMapped]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [Display(Name = "Días de Credito")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public byte DiasCred { get; set; }
+
+
         //muchos a uno
         public virtual Municipio Municipio { get; set; } //Muchos a uno      
         public virtual Empleado Empleado { get; set; }//Muchos a uno

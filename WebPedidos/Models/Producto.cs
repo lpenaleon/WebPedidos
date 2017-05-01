@@ -12,6 +12,7 @@ namespace WebPedidos.Models
     {
         [Key]
         public int idProducto { get; set; }
+
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [StringLength(14)]
         public string Codigo { get; set; }

@@ -24,7 +24,6 @@ namespace WebPedidos.Controllers
                 Include(mu => mu.Municipio).
                 Include(ti => ti.TipoIde);
 
-
             return View(clientes.ToPagedList((int)page, 8));
         }
 

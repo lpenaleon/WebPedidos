@@ -108,19 +108,24 @@ namespace WebPedidos.Controllers
         {
             return new Producto
             {
-                Codigo = view.Codigo,
-                Descripcion = view.Descripcion,
-                Empaque = view.Empaque,
-                Estado = view.Estado,
-                idMaquina = view.idMaquina,
-                idMarca = view.idMarca,
                 idProducto = view.idProducto,
+                Codigo = view.Codigo,
+                Empaque = view.Empaque,
+                Descripcion = view.Descripcion,
+                Precio = view.Precio,
                 iva = view.iva,
+                Estado = view.Estado,
+                RutaFoto = view.RutaFoto,
+                idMarca = view.idMarca,
+                idMaquina = view.idMaquina,
+                
+                
+                
                 Maquinas = view.Maquinas,
                 Marcas = view.Marcas,
                 PedidoDets = view.PedidoDets,
-                Precio = view.Precio,
-                RutaFoto =view.RutaFoto,
+                
+                
             };
         }
         // GET: Productos/Edit/5
