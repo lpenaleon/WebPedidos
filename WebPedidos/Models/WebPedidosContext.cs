@@ -64,5 +64,7 @@ namespace WebPedidos.Models
         public System.Data.Entity.DbSet<WebPedidos.Models.ContactoClie> ContactoClies { get; set; }
 
         public System.Data.Entity.DbSet<WebPedidos.Models.TipoIde> TipoIdes { get; set; }
+
+
     }
 }

@@ -14,25 +14,9 @@ namespace WebPedidos.Controllers
         //GET
         public ActionResult NewPedido()
         {
-
-            //var orderView        = new OrderView();
-            //orderView.Cliente    = new Cliente();
-            //orderView.FormPagos = new FormPago();
-            //orderView.Productos  = new List<ProductOrder>();
-            //Session["orderView"] = orderView;
-
-            //var listacl = db.Clientes.ToList();
-            //listacl.Add(new Cliente { idCliente = 0, NomClie = "[Selecciones un Cliente... ]" });
-            //listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
-            //ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
-
-            //var listafp = db.FormPagos;
-            //listafp.Add(new FormPago { idFormPago = 0, NomFPago = "[Selecciones una Forma de Pago... ]" });
-            //ViewBag.idFormPago = new SelectList(listafp.OrderBy(fp => fp.NomFPago).ToList(), "idFormPago", "NomFPago");
-
             var formapagos = new List<FormPago>();
 
-            foreach (var item in db.FormPagos)
+            foreach (var item in db.FormPagos.ToList())
             {
                 var formapago = new FormPago
                 {
@@ -42,7 +26,8 @@ namespace WebPedidos.Controllers
                 formapagos.Add(formapago);
             }
             var clientes = new List<Cliente>();
-            foreach (var itemC in db.Clientes)
+
+            foreach (var itemC in db.Clientes.ToList())
             {
                 var cliente = new Cliente
                 {
@@ -57,8 +42,7 @@ namespace WebPedidos.Controllers
                 clientes.Add(cliente);
             }
 
-        var productos = new List<ProductOrder>();
-
+            var productos = new List<ProductOrder>();
 
             var orderView = new OrderView()
             {
@@ -66,76 +50,60 @@ namespace WebPedidos.Controllers
                 FormPagos = formapagos,
                 Productos = productos
             };
+
             Session["orderView"] = orderView;
 
-            ViewBag.idCliente = new SelectList(db.Clientes
-                .OrderBy(c => c.NomClie).ToList(), "idCliente", "NomClieConca");
 
-            ViewBag.idFormPago = new SelectList(db.FormPagos
-                .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
+            vistaCliente();
+            vistaFormPago();
+            //ViewBag.idCliente = new SelectList(db.Clientes
+            //    .OrderBy(c => c.NomClie).ToList(), "idCliente", "NomClieConca");
 
-            
+            //ViewBag.idFormPago = new SelectList(db.FormPagos
+            //    .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
 
             return View(orderView);
         }
         // POST
         [HttpPost]
-        public ActionResult NewPedido( OrderView orderView)
+        public ActionResult NewPedido(OrderView orderView)
         {
-            orderView = Session["orderView"] as OrderView;
+            var orderView1 = Session["orderView"] as OrderView;
 
             // Validaciones
-
-            if (orderView.Productos.Count == 0)
+            if (orderView1.Productos.Count == 0)
             {
-                var listacl = db.Clientes.ToList();
-                listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
-                listacl.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
-                ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
+
+                vistaCliente();
                 ViewBag.Error = "Debe ingresar el Detalle";
-
-                ViewBag.idFormPago = new SelectList(db.FormPagos
-                .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
-                return View(orderView);
+                vistaFormPago();
+                return View(orderView1);
             }
 
             var ClienteID = int.Parse(Request["idCliente"]);
             if (ClienteID == 0)
             {
-                var listacl = db.Clientes.ToList();
-                listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
-                listacl.Add(new Cliente { idCliente = 0, NomClie = "[Selecciones un Cliente... ]" });
-                ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
+                vistaCliente();
                 ViewBag.Error = "Debe seleccionar un Cliente";
 
-                return View(orderView);
+                return View(orderView1);
             }
 
             var client = db.Clientes.Find(ClienteID);
             if (client == null)
             {
-                var listacl = db.Clientes.ToList();                
-                listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
-                listacl.Add(new Cliente { idCliente = 0, NomClie = "[Selecciones un Cliente... ]" });
-                ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
+                vistaCliente();
                 ViewBag.Error = "El Cliente no Existe";
-
-                return View(orderView);
+                return View(orderView1);
             }
 
             var FPagoID = byte.Parse(Request["idFormPago"]);
             if (FPagoID == 0)
             {
-                ViewBag.idFormPago = new SelectList(db.FormPagos
-                .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
+                vistaFormPago();
                 ViewBag.Error = "Debe seleccionar una Forma de Pago";
-
-                return View(orderView);
+                return View(orderView1);
             }
-
-
             //
             var nDiasCre = byte.Parse(Request["DiasCred"]);
 
@@ -143,12 +111,10 @@ namespace WebPedidos.Controllers
             {
                 if (nDiasCre == 0)
                 {
-                    ViewBag.idFormPago = new SelectList(db.FormPagos
-                    .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
+                    vistaFormPago();
+                    vistaCliente();
                     ViewBag.Error = "Los días de Crédito debe ser mayor que cero (0)";
-
-                    return View(orderView);
+                    return View(orderView1);
                 }
             }
             else
@@ -156,16 +122,13 @@ namespace WebPedidos.Controllers
                 nDiasCre = 0;
             }
 
-
             var FPago = db.FormPagos.Find(FPagoID);
             if (FPago == null)
             {
-                ViewBag.idFormPago = new SelectList(db.FormPagos
-                .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
+                vistaFormPago();
                 ViewBag.Error = "La Forma de Pago no Existe";
 
-                return View(orderView);
+                return View(orderView1);
             }
             // hacer una transacción
             long pedidoID = 0;
@@ -185,7 +148,7 @@ namespace WebPedidos.Controllers
                     db.SaveChanges();
 
                     pedidoID = db.Pedidos.ToList().Select(pd => pd.idPedido).Max();
-                    foreach (var item in orderView.Productos)
+                    foreach (var item in orderView1.Productos)
                     {
                         var pedidoDet = new PedidoDet
                         {
@@ -206,13 +169,9 @@ namespace WebPedidos.Controllers
                     transaction.Rollback();
                     ViewBag.Error = "Error: " + ex.Message;
 
-                    ViewBag.idCliente = new SelectList(db.Clientes
-                        .OrderBy(c => c.NomClie).ToList(), "idCliente", "NomClieConca");
-
-                    ViewBag.idFormPago = new SelectList(db.FormPagos
-                        .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
-                    return View(orderView); 
+                    vistaCliente();
+                    vistaFormPago();
+                    return View(orderView1);
                 }
             }
             // Fin de la transacción
@@ -220,9 +179,11 @@ namespace WebPedidos.Controllers
             ViewBag.Message = string.Format("El Pedido: {0}, se ha grabado", pedidoID);
 
             // Limpia la pantalla
+
+
             var formapagos = new List<FormPago>();
 
-            foreach (var item in db.FormPagos)
+            foreach (var item in db.FormPagos.ToList())
             {
                 var formapago = new FormPago
                 {
@@ -232,7 +193,8 @@ namespace WebPedidos.Controllers
                 formapagos.Add(formapago);
             }
             var clientes = new List<Cliente>();
-            foreach (var itemC in db.Clientes)
+
+            foreach (var itemC in db.Clientes.ToList())
             {
                 var cliente = new Cliente
                 {
@@ -249,29 +211,23 @@ namespace WebPedidos.Controllers
 
             var productos = new List<ProductOrder>();
 
-            orderView = new OrderView()
+            var orderView2 = new OrderView()
             {
                 Cliente = clientes,
                 FormPagos = formapagos,
                 Productos = productos
             };
-            Session["orderView"] = orderView;
 
-            ViewBag.idCliente = new SelectList(db.Clientes
-                .OrderBy(c => c.NomClie).ToList(), "idCliente", "NomClieConca");
+            Session["orderView"] = orderView2;
 
-            ViewBag.idFormPago = new SelectList(db.FormPagos
-                .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
+            vistaCliente();
+            vistaFormPago();
 
-            return View(orderView);
+            return View(orderView2);
         }
         public ActionResult Add_Producto()
         {
-            var listap = db.Productos.ToList();
-            listap.Add(new ProductOrder { idProducto = 0, Descripcion = "[Selecione un Producto... ]" });
-            listap = listap.OrderBy(p => p.Descripcion).ToList();
-            ViewBag.idProducto = new SelectList(listap, "idProducto", "Descripcion");
-
+            vistaProducto();
             return View();
         }
 
@@ -282,12 +238,9 @@ namespace WebPedidos.Controllers
 
             var productoID = int.Parse(Request["idProducto"]);
 
-            if  (productoID == 0)
+            if (productoID == 0)
             {
-                var listap = db.Productos.ToList();
-                listap.Add(new ProductOrder { idProducto = 0, Descripcion = "[Selecione un Producto... ]" });
-                listap = listap.OrderBy(p => p.Descripcion).ToList();
-                ViewBag.idProducto = new SelectList(listap, "idProducto", "Descripcion");
+                vistaProducto();
                 ViewBag.Error = "Debe seleccionar un Producto";
 
                 return View(productOrder);
@@ -296,60 +249,87 @@ namespace WebPedidos.Controllers
             var product = db.Productos.Find(productoID);
             if (product == null)
             {
-                var listap = db.Productos.ToList();
-                listap.Add(new ProductOrder { idProducto = 0, Descripcion = "[Selecione un Producto... ]" });
-                listap = listap.OrderBy(p => p.Descripcion).ToList();
-                ViewBag.idProducto = new SelectList(listap, "idProducto", "Descripcion");
+                vistaProducto();
                 ViewBag.Error = "El Producto no Existe";
 
                 return View(productOrder);
             }
 
+            var vcan = Request["Cantidad"];
+            
+            float ncantidad = 0;
+            var ncan = Request["Cantidad"];
+
+            if (vcan == "")
+            {
+                ncantidad = 0;
+            }
+            else
+            { 
+                ncantidad = float.Parse(Request["Cantidad"]);
+                if (ncantidad < 0)
+                {
+                    vistaProducto();
+                    ViewBag.Error = "La Cantidad debe ser mayor que cero (0)";
+                    return View(productOrder);
+                }
+            }
+
+            // verifica si ya existe en mi lista temporal 
+            // si lo encuentra le suma la cantidad 
+            // SINO agrega un registro nuevo
+
             productOrder = orderView.Productos.Find(p => p.idProducto == productoID);
             if (productOrder == null)
             {
-                productOrder = new ProductOrder
+                if (ncantidad == 0)
                 {
-                    idProducto  = product.idProducto,
-                    Descripcion = product.Descripcion,
-                    iva         = product.iva,
-                    Precio      = product.Precio,
-                    Cantidad    = float.Parse(Request["Cantidad"])
-                    //RutaFoto = product.RutaFoto                
-                };
-                orderView.Productos.Add(productOrder);
-            }
+                    vistaProducto();
+                    ViewBag.Error = "La Cantidad debe ser mayor que cero (0)";
+                    return View(productOrder);
+                }
+                else
+                {
+                    productOrder = new ProductOrder
+                    {
+                        idProducto = product.idProducto,
+                        Descripcion = product.Descripcion,
+                        iva = product.iva,
+                        Precio = product.Precio,
+                        Cantidad = float.Parse(Request["Cantidad"])
+                    };
+                    orderView.Productos.Add(productOrder);
+                }
+           }
             else
             {
                 productOrder.Cantidad += float.Parse(Request["Cantidad"]);
             }
 
+
+    
+            decimal TotPre = 0;
+            decimal TotAcu = 0;
+            decimal TotIVA = 0;
+
+            foreach (var items in orderView.Productos)
+            {
+            TotIVA = items.ValorIVA + TotIVA;
+                TotPre = items.ValorTot + TotPre;
+            }
+
+            TotAcu = TotIVA + TotPre;
+
             var ncant = orderView.Productos.Count;
-            if (ncant == 1)
-            { }
-            else
-                if (ncant > 1)
-            { }
 
+            ViewBag.Tot_IVA = string.Format("{0:C2}", TotIVA);
+            ViewBag.Tot_Pre = string.Format("{0:C2}", TotPre);
+            ViewBag.Tot_Acu = string.Format("{0:C2}", TotAcu);
 
-            //decimal TotIVA = 0;
-            //decimal TotPrecio = 0;
-
-            //foreach (var items in orderView.Productos)
-            //{
-            //    TotIVA = items.ValorIVA + TotIVA;
-            //    TotPrecio = items.Precio + TotPrecio;
-            //}
-
-            var listacl = db.Clientes.ToList();
-            listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
-            listacl.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
-            ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
-
-            ViewBag.idFormPago = new SelectList(db.FormPagos
-            .OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
-
-            return View("NewPedido",orderView);
+            vistaCliente1();
+            vistaFormPago();
+            
+            return View("NewPedido", orderView);
         }
 
         protected override void Dispose(bool disposing)
@@ -360,5 +340,49 @@ namespace WebPedidos.Controllers
             }
             base.Dispose(disposing);
         }
+        public void vistaCliente()
+        {
+            //var listac = db.Clientes.OrderBy(cl => cl.NomClieConca).ToList();
+            //listac.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
+            //ViewBag.idCliente = new SelectList(listac, "idCliente", "NomClieConca");
+
+            var listacl = db.Clientes.ToList();
+            listacl.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
+            listacl = listacl.OrderBy(cl => cl.NomClie).ToList();
+            ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
+        }
+        public void vistaCliente1()
+        {
+            var listac = db.Clientes.ToList();
+            listac.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
+            listac = listac.OrderBy(cl => cl.NomClie).ToList();
+            ViewBag.idCliente = new SelectList(listac, "idCliente", "NomClieConca");
+
+            //var listacl = db.Clientes.ToList();
+            //listacl = listacl.OrderBy(cl => cl.NomClieConca).ToList();
+            //listacl.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
+            //ViewBag.idCliente = new SelectList(listacl, "idCliente", "NomClieConca");
+        }
+
+
+        public void vistaFormPago()
+        {   
+            //ViewBag.idFormPago = new SelectList(db.FormPagos
+            //.OrderBy(f => f.NomFPago).ToList(), "idFormPago", "NomFPago");
+
+            var listafp = db.FormPagos.OrderBy(fp => fp.NomFPago).ToList();
+            listafp.Add(new FormPago { idFormPago = 0, NomFPago = "[Seleccione una Forma de Pago... ]" });
+            listafp = listafp.OrderBy(fp => fp.NomFPago).ToList();
+            ViewBag.idFormPago = new SelectList(listafp, "idFormPago", "NomFPago");
+        }
+
+        public void vistaProducto()
+        {
+            var listap = db.Productos.ToList();
+            listap.Add(new ProductOrder { idProducto = 0, Descripcion = "[Selecione un Producto... ]" });
+            listap = listap.OrderBy(p => p.Descripcion).ToList();
+            ViewBag.idProducto = new SelectList(listap, "idProducto", "Descripcion");
+        }
     }
+
 }

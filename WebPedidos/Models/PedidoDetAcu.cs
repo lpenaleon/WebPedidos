@@ -9,25 +9,23 @@ namespace WebPedidos.Models
 {
     [NotMapped]
     public class PedidoDetAcu
-    {
-
-
-        [Display(Name = "Total IVA")]
+    {    
+        
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal TotVrIVA { get; }
+        public decimal Tot_IVA { get; set; }
 
-        [Display(Name = "Total Valor")]
+        
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal TotPrecio { get ; }
+        public decimal Tot_Pre { get; set; }
 
-        [Display(Name = "Total")]
+        
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal total { get { return TotVrIVA + (decimal)TotPrecio ; } }
+        public decimal Tot_Acu { get; set; }
     }
 }

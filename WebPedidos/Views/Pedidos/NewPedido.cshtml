@@ -9,43 +9,47 @@
 <h3 style="color:#FF0000;">@ViewBag.Error</h3>
 <h3 style="color:green">@ViewBag.Message</h3>
 
-@using (Html.BeginForm("NewPedido","Pedidos",FormMethod.Post))
+@using (Html.BeginForm("NewPedido", "Pedidos", FormMethod.Post))
 {
-@Html.AntiForgeryToken()
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Cliente.FirstOrDefault().idCliente, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("idCliente", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Cliente.FirstOrDefault().idCliente, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cliente.FirstOrDefault().idCliente, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idCliente", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cliente.FirstOrDefault().idCliente, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.FormPagos.FirstOrDefault().idFormPago, "Forma de Pago", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("idFormPago", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.FormPagos.FirstOrDefault().idFormPago, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FormPagos.FirstOrDefault().idFormPago, "Forma de Pago", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idFormPago", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FormPagos.FirstOrDefault().idFormPago, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Cliente.FirstOrDefault().DiasCred, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Cliente.FirstOrDefault().DiasCred, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Cliente.FirstOrDefault().DiasCred, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cliente.FirstOrDefault().DiasCred, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cliente.FirstOrDefault().DiasCred, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cliente.FirstOrDefault().DiasCred, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-10">
-    </div>
-    <div class="col-md-2">
-        @Html.ActionLink("Adicionar un Producto", "Add_Producto", new { }, new { @class = "btn btn-primary" })
-    </div>
+
+        <div class="col-md-10">
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink("Adicionar un Producto", "Add_Producto", new { }, new { @class = "btn btn-primary" })
+        </div>
 
         <h3>Detalle del Pedido</h3>
 
         <table class="table table-striped">
             <tr>
-                <th>
+                <th style="width:48%;">
                     @Html.DisplayNameFor(model => model.Products.Descripcion)
                 </th>
 
@@ -87,21 +91,44 @@
                         @Html.ActionLink("Eliminar", "Delete", new { id = Model.Productos[i] }, new { @class = "btn btn-xs btn-danger" })
                     </td>
                 </tr>
-
             }
         </table>
-        <div class="col-md-10">
+  
+        <div class="row">
+            <div class="col-md-8">Total ...</div>
+                <div class="col-md-1"><h5>@ViewBag.Tot_IVA</h5></div>
+                <div class="col-md-1"><h5>@ViewBag.Tot_Pre</h5></div>
+                <div class="col-md-1"><h5>@ViewBag.Tot_Acu</h5></div>
+            </div>
+            @*<div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-2">Total IVA</div>
+                <div class="col-md-3"><h5>@ViewBag.Tot_IVA</h5></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7"></div><div class="col-md-2">Subtotal</div> <div class="col-md-3"><h5>@ViewBag.Tot_Pre</h5></div>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div><div class="col-md-2">Total</div>    <div class="col-md-3"><h5>@ViewBag.Tot_Acu</h5></div>
+            </div>*@
+
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <button type="submit" id="NewPedido" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span> Guardar el Pedido
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-2">
-            <button type="submit" id="NewPedido" class="btn btn-success",>
-                <span class="glyphicon glyphicon-plus"></span> Guardar el Pedido
-            </button>
-        </div>
-    </div>
-
-
-
 }
+
+
+
+
+
+
 
 
 

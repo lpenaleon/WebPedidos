@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 using WebPedidos.Models;
 
 namespace WebPedidos.ViewModels
@@ -9,7 +12,6 @@ namespace WebPedidos.ViewModels
         public List<Cliente> Cliente { get; set; }
         public List<FormPago> FormPagos { get; set; }
         public ProductOrder Products { get; set; }
-        public PedidoDetAcu PedidoDetAcu { get; set; }
         public List<ProductOrder> Productos { get; set; }   
     }
 }

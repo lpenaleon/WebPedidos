@@ -20,20 +20,32 @@ namespace WebPedidos.Models
         
         [NotMapped]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public double AcuPrecio { get; set; }
+        public decimal Tot_IVA { get; set; }
 
         [NotMapped]
-        public double vrIVA { get; set; }
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal Tot_Pre { get; set; }
+
+        [NotMapped]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal Tot_Acu { get; set; }
 
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Días de Credito")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
-
         public byte DiasCred { get; set; }
+
         public int idCliente { get; set; }
+
         public int idFormPago { get; set; }
+
         public OrdenEstado OrdenEstado { get; set; }
 
         //Muchos a uno
