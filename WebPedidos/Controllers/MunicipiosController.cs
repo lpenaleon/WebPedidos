@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "ViewMuni")]
         // GET: Municipios
         public ActionResult Index(int? page = null)
         {
@@ -23,6 +24,7 @@ namespace WebPedidos.Controllers
             return View(municipios.ToPagedList((int)page, 8));
         }
 
+        [Authorize(Roles = "View")]
         // GET: Municipios/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,6 +40,7 @@ namespace WebPedidos.Controllers
             return View(municipio);
         }
 
+        [Authorize(Roles = "Create")]
         // GET: Municipios/Create
         public ActionResult Create()
         {
@@ -63,6 +66,7 @@ namespace WebPedidos.Controllers
             return View(municipio);
         }
 
+        [Authorize(Roles = "Edit")]
         // GET: Municipios/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -96,6 +100,7 @@ namespace WebPedidos.Controllers
             return View(municipio);
         }
 
+        [Authorize(Roles = "Delete")]
         // GET: Municipios/Delete/5
         public ActionResult Delete(int? id)
         {

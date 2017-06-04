@@ -14,7 +14,7 @@ namespace WebPedidos.Controllers
     public class TelefonosController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
-
+        [Authorize (Roles = "Admin")]
         // GET: Telefonos
         public ActionResult Index(int? page = null)
         {
@@ -22,7 +22,7 @@ namespace WebPedidos.Controllers
             var telefonos = db.Telefonos.Include(t => t.TipoTels).OrderBy(te => te.IdTelefono);
             return View(telefonos.ToPagedList((int)page, 9));   //.ToList());
         }
-
+        [Authorize(Roles = "View")]
         // GET: Telefonos/Details/5
         public ActionResult Details(int? id)
         {
@@ -37,7 +37,7 @@ namespace WebPedidos.Controllers
             }
             return View(telefono);
         }
-
+        [Authorize(Roles = "Create")]
         // GET: Telefonos/Create
         public ActionResult Create()
         {
@@ -62,7 +62,7 @@ namespace WebPedidos.Controllers
             ViewBag.idTipoTel = new SelectList(db.TipoTels, "idTipoTel", "NomTipoTel", telefono.idTipoTel);
             return View(telefono);
         }
-
+        [Authorize(Roles = "Edit")]
         // GET: Telefonos/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -95,7 +95,7 @@ namespace WebPedidos.Controllers
             ViewBag.idTipoTel = new SelectList(db.TipoTels, "idTipoTel", "NomTipoTel", telefono.idTipoTel);
             return View(telefono);
         }
-
+        [Authorize(Roles = "Delete")]
         // GET: Telefonos/Delete/5
         public ActionResult Delete(int? id)
         {

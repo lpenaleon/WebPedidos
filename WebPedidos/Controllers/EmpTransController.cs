@@ -14,12 +14,13 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "ViewETrans")]
         // GET: EmpTrans
         public ActionResult Index()
         {
             return View(db.EmpTrans.OrderBy(et => et.NomEmpTran).ToList());
         }
-
+        [Authorize(Roles = "View")]
         // GET: EmpTrans/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,6 +36,7 @@ namespace WebPedidos.Controllers
             return View(empTran);
         }
 
+        [Authorize(Roles = "Create")]
         // GET: EmpTrans/Create
         public ActionResult Create()
         {
@@ -58,6 +60,7 @@ namespace WebPedidos.Controllers
             return View(empTran);
         }
 
+        [Authorize(Roles = "Edit")]
         // GET: EmpTrans/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -89,6 +92,7 @@ namespace WebPedidos.Controllers
             return View(empTran);
         }
 
+        [Authorize(Roles = "Delete")]
         // GET: EmpTrans/Delete/5
         public ActionResult Delete(int? id)
         {

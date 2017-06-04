@@ -14,7 +14,7 @@ namespace WebPedidos.Models
         public long idPedido { get; set; }
 
         [Required(ErrorMessage ="Debe ingresar una {0}")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaPedido { get; set; }
         
@@ -55,5 +55,6 @@ namespace WebPedidos.Models
         //uno a muchos
         public virtual ICollection<PedFlete> PedFletes { get; set; }
         public virtual ICollection<PedidoDet> PedidoDets { get; set; }
+        public virtual ICollection<Estado> Estados { get; set; }
     }
 }

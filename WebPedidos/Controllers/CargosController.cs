@@ -13,6 +13,7 @@ namespace WebPedidos.Controllers
     public class CargosController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
+        [Authorize(Roles = "Admin")]
 
         // GET: Cargos
         public ActionResult Index()
@@ -20,6 +21,7 @@ namespace WebPedidos.Controllers
             return View(db.Cargos.OrderBy(cg => cg.NomCargo).ToList());
         }
 
+        [Authorize(Roles = "View")]
         // GET: Cargos/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,6 +37,7 @@ namespace WebPedidos.Controllers
             return View(cargo);
         }
 
+        [Authorize(Roles = "Create")]
         // GET: Cargos/Create
         public ActionResult Create()
         {
@@ -57,7 +60,7 @@ namespace WebPedidos.Controllers
 
             return View(cargo);
         }
-
+        [Authorize(Roles = "Edit")]
         // GET: Cargos/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -88,7 +91,7 @@ namespace WebPedidos.Controllers
             }
             return View(cargo);
         }
-
+        [Authorize(Roles = "Delete")]
         // GET: Cargos/Delete/5
         public ActionResult Delete(int? id)
         {

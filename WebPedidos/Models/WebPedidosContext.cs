@@ -15,8 +15,7 @@ namespace WebPedidos.Models
         // automatically whenever you change your model schema, please use data migrations.
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
-    
-            //abre db
+        //abre db
         public WebPedidosContext() : base("WebPedidosContext")
         {
         }
@@ -24,7 +23,6 @@ namespace WebPedidos.Models
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();            
         }
-
         //cierra db
         protected override void Dispose(bool disposing)
         {
@@ -65,6 +63,7 @@ namespace WebPedidos.Models
 
         public System.Data.Entity.DbSet<WebPedidos.Models.TipoIde> TipoIdes { get; set; }
 
+        public System.Data.Entity.DbSet<WebPedidos.Models.Estado> Estados { get; set; }
 
     }
 }

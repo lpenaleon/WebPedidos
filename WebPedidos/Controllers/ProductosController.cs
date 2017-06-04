@@ -12,10 +12,12 @@ using System.Web;
 
 namespace WebPedidos.Controllers
 {
+   
     public class ProductosController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize (Roles = "View")]
         // GET: Productos
         public ActionResult Index(int? page = null)
         {
@@ -44,8 +46,9 @@ namespace WebPedidos.Controllers
             return View(producto);
         }
 
-        
+
         // GET: Productos/Create
+        [Authorize(Roles = "Create")]
         public ActionResult Create()
         {
             ViewBag.idMaquina = new SelectList(db.Maquinas, "IdMaquina", "NomMaquina");
@@ -129,6 +132,7 @@ namespace WebPedidos.Controllers
             };
         }
         // GET: Productos/Edit/5
+        [Authorize(Roles = "Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -228,6 +232,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: Productos/Delete/5
+        [Authorize (Roles = "Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

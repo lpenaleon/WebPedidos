@@ -20,6 +20,7 @@ namespace WebPedidos.Controllers
             return View(db.Fletes.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Fletes/Details/5
         public ActionResult Details(int? id)
         {

@@ -16,6 +16,7 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "Admin")]
         // GET: TipoTels
         public ActionResult Index()
         {

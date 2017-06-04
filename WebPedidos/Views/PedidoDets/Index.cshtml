@@ -12,33 +12,33 @@
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Productos.Codigo)
+            @Html.DisplayNameFor(model => model.Producto.Codigo)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cantidad)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ValorUnit)
+            @*@Html.DisplayNameFor(model => model.ValorUnit)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubTotal)
-        </th>
+            @*@Html.DisplayNameFor(model => model.SubTotal)
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Productos.Codigo)
+            @Html.DisplayFor(modelItem => item.Producto.Codigo)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Cantidad)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ValorUnit)
+            @*@Html.DisplayFor(modelItem => item.ValorUnit)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SubTotal)
+            @*@Html.DisplayFor(modelItem => item.SubTotal)*@
         </td>
         <td>
             @Html.ActionLink("Modificar", "Edit", new { id = item.idPedido }, new { @class = "btn btn-sm btn-success" }) |

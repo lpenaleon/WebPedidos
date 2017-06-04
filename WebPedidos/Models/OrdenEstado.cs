@@ -7,11 +7,11 @@ namespace WebPedidos.Models
 {
     public enum OrdenEstado
     {
-        Creada,
-        EnProceso,
-        Autorizada,
-        Bloqueada,
-        EnDespacho,
+        Creado,
+        En_Proceso,
+        Autorizado,
+        Bloqueado,
+        En_Despacho,
         Entregada
     }
 }

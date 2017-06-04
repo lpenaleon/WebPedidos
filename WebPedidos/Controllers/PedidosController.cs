@@ -11,6 +11,8 @@ namespace WebPedidos.Controllers
     public class PedidosController : Controller
     {
         WebPedidosContext db = new WebPedidosContext();
+
+        [Authorize(Roles = "CreatePed")]
         //GET
         public ActionResult NewPedido()
         {
@@ -141,7 +143,7 @@ namespace WebPedidos.Controllers
                         idCliente = ClienteID,
                         idFormPago = FPagoID,
                         FechaPedido = DateTime.Now,
-                        OrdenEstado = OrdenEstado.Creada,
+                        OrdenEstado = OrdenEstado.Creado,
                         DiasCred = nDiasCre
                     };
                     db.Pedidos.Add(pedido);

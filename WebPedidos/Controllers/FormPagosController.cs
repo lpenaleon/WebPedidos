@@ -14,6 +14,7 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "ViewETrans")]
         // GET: FormPagos
         public ActionResult Index()
         {

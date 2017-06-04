@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "Admin")]
         // GET: Marcas
         public ActionResult Index(int? page = null)
         {

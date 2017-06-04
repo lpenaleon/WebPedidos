@@ -1,0 +1,58 @@
+﻿@model WebPedidos.Models.Pedido
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.NumIde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.NumIde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormPago.NomFPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormPago.NomFPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaPedido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiasCred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiasCred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrdenEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrdenEstado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idPedido }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

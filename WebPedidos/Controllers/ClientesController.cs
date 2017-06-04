@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        [Authorize(Roles = "ViewClie")]
         // GET: Clientes
         public ActionResult Index(int? page = null)
         {
@@ -26,7 +27,7 @@ namespace WebPedidos.Controllers
 
             return View(clientes.ToPagedList((int)page, 8));
         }
-
+        [Authorize(Roles = "View")]
         // GET: Clientes/Details/5
         public ActionResult Details(int? id)
         {
@@ -41,7 +42,7 @@ namespace WebPedidos.Controllers
             }
             return View(cliente);
         }
-
+        [Authorize(Roles = "Create")]
         // GET: Clientes/Create
         public ActionResult Create()
         {
@@ -76,6 +77,7 @@ namespace WebPedidos.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Edit")]
         // GET: Clientes/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -113,6 +115,7 @@ namespace WebPedidos.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Delete")]
         // GET: Clientes/Delete/5
         public ActionResult Delete(int? id)
         {

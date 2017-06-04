@@ -33,6 +33,13 @@ namespace WebPedidos.Models
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public float Cantidad { get; set; }
 
+        [NotMapped]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal PrecioT { get { return Precio * (decimal)Cantidad; } }
+
+
         public long idPedido { get; set; }
         public int idProducto { get; set; }
 

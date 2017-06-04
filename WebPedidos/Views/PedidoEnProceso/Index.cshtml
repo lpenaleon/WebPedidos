@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<WebPedidos.Models.Pedido>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pedidos en Creados</h2>
+
+<p>
+   @*@Html.ActionLink("Crear un Nuevo", "Create", new { }, new { @class = "btn btn-sm btn-primary" })*@
+</p>
+<table class="table table-condensed table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().idPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DiasCred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Empaque)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Precio)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RutaFoto)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                <h6>@Html.DisplayFor(modelItem => item.Descripcion)</h6>
+            </td>
+            <td>
+                <h6>@Html.DisplayFor(modelItem => item.Maquinas.NomMaquina)</h6>
+            </td>
+            <td>
+                <h6>@Html.DisplayFor(modelItem => item.Marcas.NomMarca)</h6>
+            </td>
+            <td>
+                <h6>@Html.DisplayFor(modelItem => item.Empaque)</h6>
+            </td>
+            <td>
+                <h6>@Html.DisplayFor(modelItem => item.Precio)</h6>
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>*@
+            <td>
+                @if (!string.IsNullOrEmpty(item.RutaFoto))
+                {
+
+                    <img src="@Url.Content(item.RutaFoto)" alt="Image" style="width:150px;height:150px;max-width:100%; height:auto;" />
+                    //    <img src="@Url.Content(item.RutaFoto)" alt="Image" style="width:150px;height:150px;max-width:100%; height:auto;" />
+                }
+                @*else {
+                    if (  Imagen.FromStream ("@Url.Content(item.RutaFoto)"))         //    string.Empty(item.RutaFoto,""))
+                    {
+                        <img src="~/Imagenes/blanco.png" style="width:150px;height:150px;max-width:100%; height:auto;" />
+                    }*@
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.idProducto }, new { @class = "btn btn-xs btn-success" })
+                @Html.ActionLink("Detalle", "Details", new { id = item.idProducto }, new { @class = "btn btn-xs btn-default" })
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.idProducto }, new { @class = "btn btn-xs btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+<div class="col-md-2">
+    Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+</div>
+<div class="col-md-10">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+        ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+</div>
+
+
+
+

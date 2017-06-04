@@ -14,6 +14,8 @@ namespace WebPedidos.Controllers
     public class DepartamentosController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
+
+        [Authorize(Roles = "Admin")]
         // GET: Departamentos
         public ActionResult Index(int? page = null)
         {

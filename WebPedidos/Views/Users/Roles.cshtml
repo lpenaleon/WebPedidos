@@ -1,0 +1,27 @@
+﻿@model WebPedidos.ViewModels.UserView
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles para el usuario: @Model.Name </h2>
+
+<p>
+    @Html.ActionLink("Crear un Nuevo Role", "AddRole", new {idUser = Model.UserID }, new { @class = "btn btn-sm btn-primary" })
+    @Html.ActionLink("Volver a la Lista", "Index", new { }, new { @class = "btn btn-default" })
+</p>
+<table class="table table-striped">
+    @for (int i = 0; i < Model.Roles.Count ; i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+            </td>
+  
+            <td>
+                @Html.ActionLink("Borrar", "Delete", new {idUser = Model.UserID, idRole = Model.Roles[i].RoleID }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
