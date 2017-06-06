@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
+using WebPedidos.Models;
 
 namespace WebPedidos.Models
 {
@@ -64,6 +65,5 @@ namespace WebPedidos.Models
         public System.Data.Entity.DbSet<WebPedidos.Models.TipoIde> TipoIdes { get; set; }
 
         public System.Data.Entity.DbSet<WebPedidos.Models.Estado> Estados { get; set; }
-
     }
 }

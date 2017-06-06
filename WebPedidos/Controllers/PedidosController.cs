@@ -5,6 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using WebPedidos.Models;
 using WebPedidos.ViewModels;
+using PagedList;
+using System.Data.Entity;
+using System.Net;
+using WebPedidos.Help;
+using System.Data;
+
 
 namespace WebPedidos.Controllers
 {
@@ -54,7 +60,8 @@ namespace WebPedidos.Controllers
             };
 
             Session["orderView"] = orderView;
-
+            Session["Cliente"] = null;
+            Session["FormaPago"] = null;
 
             vistaCliente();
             vistaFormPago();
@@ -71,7 +78,7 @@ namespace WebPedidos.Controllers
         public ActionResult NewPedido(OrderView orderView)
         {
             var orderView1 = Session["orderView"] as OrderView;
-
+            var clienteSession = (Cliente)Session["Cliente"];
             // Validaciones
             if (orderView1.Productos.Count == 0)
             {
@@ -164,6 +171,29 @@ namespace WebPedidos.Controllers
                         db.PedidoDets.Add(pedidoDet);
                         db.SaveChanges();
                     }
+
+                    var pedidoFl = new PedFlete
+                    {
+                        idPedido = pedidoID,
+                        idFlete = 2,
+                        idEmpTran = 1,
+                        Valor = 0,
+                        Obervaciones = ""
+                                 
+                    };
+                    db.PedFletes.Add(pedidoFl);
+                    db.SaveChanges();
+
+                    var estado = new Estado
+                    {
+                        idPedido = pedidoID,
+                        FechaEstado = DateTime.Now,
+                        OrdenEstado = OrdenEstado.Creado,
+                        Nota = ""
+                    };
+                    db.Estados.Add(estado);
+                    db.SaveChanges();
+
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -222,13 +252,25 @@ namespace WebPedidos.Controllers
 
             Session["orderView"] = orderView2;
 
-            vistaCliente();
+            vistaCliente(clienteSession.idCliente);
             vistaFormPago();
 
             return View(orderView2);
         }
-        public ActionResult Add_Producto()
+
+        private void vistaCliente(int idCliente)
         {
+            var listac = db.Clientes.ToList();
+            listac.Add(new Cliente { idCliente = 0, NomClie = "[Seleccione un Cliente... ]" });
+            listac = listac.OrderBy(cl => cl.NomClie).ToList();
+            ViewBag.idCliente = new SelectList(listac.Where(c => c.idCliente == idCliente), "idCliente", "NomClieConca");
+        }
+
+        public ActionResult Add_Producto(int? id)
+        {
+            var idCliente = Request["ClienteID"];
+
+            Session["Cliente"] = db.Clientes.Find(id);
             vistaProducto();
             return View();
         }
@@ -238,6 +280,7 @@ namespace WebPedidos.Controllers
         {
             var orderView = Session["orderView"] as OrderView;
 
+            
             var productoID = int.Parse(Request["idProducto"]);
 
             if (productoID == 0)
@@ -307,8 +350,6 @@ namespace WebPedidos.Controllers
             {
                 productOrder.Cantidad += float.Parse(Request["Cantidad"]);
             }
-
-
     
             decimal TotPre = 0;
             decimal TotAcu = 0;
@@ -334,6 +375,133 @@ namespace WebPedidos.Controllers
             return View("NewPedido", orderView);
         }
 
+        // GET: Productos/Edit/5
+        [Authorize(Roles = "Edit")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var producto = db.Productos.Find(id);
+
+            if (producto == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.idMaquina = new SelectList(db.Maquinas, "IdMaquina", "NomMaquina", producto.idMaquina);
+            ViewBag.idMarca = new SelectList(db.Marcas, "idMarca", "NomMarca", producto.idMarca);
+
+            var view = toView(producto);
+
+            return View(view);
+        }
+        private ProductoView toView(Producto producto)
+        {
+            return new ProductoView
+            {
+                Codigo = producto.Codigo,
+                Descripcion = producto.Descripcion,
+                Empaque = producto.Empaque,
+                Estado = producto.Estado,
+                idMaquina = producto.idMaquina,
+                idMarca = producto.idMarca,
+                idProducto = producto.idProducto,
+                iva = producto.iva,
+                Maquinas = producto.Maquinas,
+                Marcas = producto.Marcas,
+                PedidoDets = producto.PedidoDets,
+                Precio = producto.Precio,
+                RutaFoto = producto.RutaFoto,
+            };
+        }
+
+        // POST: Productos/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProductoView view)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                   // var image1 = "banco.png";
+                   // var imagen = view.RutaFoto;
+                   // var carpeta = "~/Imagenes";
+
+                    if (view.ImagenFile != null)
+                    {
+                        imagen = Utilities.CargarFoto(view.ImagenFile, carpeta);
+
+                        imagen = string.Format("{0}/{1}", carpeta, imagen);
+                    }
+                    else
+                    {
+                        imagen = Utilities.CargarFoto(view.ImagenFile, carpeta);
+
+                        imagen = string.Format("{0}/{1}", carpeta, image1);
+                    }
+
+                    view.RutaFoto = imagen;
+
+                  //  var producto = toProducto(view);
+
+                 //   producto.RutaFoto = imagen;
+
+                    db.Entry(producto).State = EntityState.Modified;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+
+                ViewBag.idMaquina = new SelectList(db.Maquinas, "IdMaquina", "NomMaquina", view.idMaquina);
+                ViewBag.idMarca = new SelectList(db.Marcas, "idMarca", "NomMarca", view.idMarca);
+                return View(view);
+
+            }
+
+            ViewBag.idMaquina = new SelectList(db.Maquinas, "IdMaquina", "NomMaquina", view.idMaquina);
+            ViewBag.idMarca = new SelectList(db.Marcas, "idMarca", "NomMarca", view.idMarca);
+            return View(view);
+        }
+
+        // GET: Productos/Delete/5
+        [Authorize(Roles = "Delete")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Producto producto = db.Productos.Find(id);
+            if (producto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(producto);
+        }
+
+        // POST: Productos/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Producto producto = db.Productos.Find(id);
+            db.Productos.Remove(producto);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -342,6 +510,7 @@ namespace WebPedidos.Controllers
             }
             base.Dispose(disposing);
         }
+
         public void vistaCliente()
         {
             //var listac = db.Clientes.OrderBy(cl => cl.NomClieConca).ToList();
@@ -385,6 +554,14 @@ namespace WebPedidos.Controllers
             listap = listap.OrderBy(p => p.Descripcion).ToList();
             ViewBag.idProducto = new SelectList(listap, "idProducto", "Descripcion");
         }
+
+
+
+
+
+
+
+
     }
 
 }

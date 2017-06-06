@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidoAutorizados
+        [Authorize(Roles = "Tesoreria")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos
@@ -29,7 +30,8 @@ namespace WebPedidos.Controllers
             return View(pedidos.ToList());
         }
 
-        // GET: PedidoAutorizados/Details/5
+        // GET: PedidoEnP/Details/5
+        [Authorize(Roles = "Tesoreria")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -41,37 +43,28 @@ namespace WebPedidos.Controllers
             {
                 return HttpNotFound();
             }
-            return View(pedido);
-        }
 
-        // GET: PedidoAutorizados/Create
-        public ActionResult Create()
-        {
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde");
-            ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago");
-            return View();
-        }
+            var pedDet0 = db.PedidoDets
+                .Include(pd => pd.Producto)
+                .OrderBy(pd => pd.idPedidoDet);
 
-        // POST: PedidoAutorizados/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idPedido,FechaPedido,DiasCred,idCliente,idFormPago,OrdenEstado")] Pedido pedido)
-        {
-            if (ModelState.IsValid)
+            var pedDet = pedDet0
+                .Where(p => p.idPedido == id);
+
+            decimal TotPre = 0;
+
+            foreach (var items in pedDet)
             {
-                db.Pedidos.Add(pedido);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                TotPre = items.PrecioT + TotPre;
             }
 
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", pedido.idCliente);
-            ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago", pedido.idFormPago);
-            return View(pedido);
+            ViewBag.Tot_Pre = string.Format("{0:C2}", TotPre);
+
+            return View(pedDet.ToList());
         }
 
         // GET: PedidoAutorizados/Edit/5
+        [Authorize(Roles = "Tesoreria")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -99,37 +92,24 @@ namespace WebPedidos.Controllers
             {
                 db.Entry(pedido).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var estado = new Estado
+                {
+                    idPedido = pedido.idPedido,
+                    FechaEstado = DateTime.Now,
+                    OrdenEstado = pedido.OrdenEstado,
+                    Nota = "Contabilidad / Tesorería"
+                };
+                db.Estados.Add(estado);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
+            
             ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", pedido.idCliente);
             ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago", pedido.idFormPago);
             return View(pedido);
-        }
-
-        // GET: PedidoAutorizados/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pedido pedido = db.Pedidos.Find(id);
-            if (pedido == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pedido);
-        }
-
-        // POST: PedidoAutorizados/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            Pedido pedido = db.Pedidos.Find(id);
-            db.Pedidos.Remove(pedido);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

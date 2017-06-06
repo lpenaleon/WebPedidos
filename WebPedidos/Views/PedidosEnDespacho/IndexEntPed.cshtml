@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WebPedidos.Models.PedFlete>
+
+@{
+    ViewBag.Title = "IndexEntPed";
+}
+
+<h2>Cierre de un Pedido</h2>
+<p>
+    @Html.ActionLink("Volver a la Lista", "Index", new { }, new { @class = "btn btn-default" })
+
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pedido.idPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpTran.NomEmpTran)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flete.NomFlete)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Obervaciones)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+               @Html.DisplayFor(modelItem => item.Pedido.idPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpTran.NomEmpTran)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Flete.NomFlete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Obervaciones)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "EditEntPed", new { id = item.idPedFlete }, new { @class = "btn btn-sm btn-success" }) |
+                @*@Html.ActionLink("Detalles", "Details", new { id = item.idPedFlete }, new { @class = "btn btn-sm btn-default" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.idPedFlete }, new { @class = "btn btn-sm btn-danger" })*@
+            </td>
+        </tr>
+    }
+
+</table>

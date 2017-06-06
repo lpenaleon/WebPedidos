@@ -12,10 +12,19 @@ namespace WebPedidos.Models
     {
         [Key]
         public long idPedFlete { get; set; }
+
         public long idPedido { get; set; }
+
         public int idFlete { get; set; }
+
         public int idEmpTran { get; set; }
+
+        [Display(Name = "Valor Flete")]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = ("El campo {0} es requerido"))]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Valor { get; set; }
+
         public string Obervaciones { get; set; }
 
         //muchos a uno

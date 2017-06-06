@@ -46,7 +46,6 @@ namespace WebPedidos
             {
                 userManager.AddToRole(user.Id, "Create");
             }
-
             if (!userManager.IsInRole(user.Id, "Edit"))
             {
                 userManager.AddToRole(user.Id, "Edit");
@@ -79,6 +78,19 @@ namespace WebPedidos
             {
                 userManager.AddToRole(user.Id, "CreatePed");
             }
+            if (!userManager.IsInRole(user.Id, "Tesoreria"))
+            {
+                userManager.AddToRole(user.Id, "Tesoreria");
+            }
+            if (!userManager.IsInRole(user.Id, "Despachos"))
+            {
+                userManager.AddToRole(user.Id, "Despachos");
+            }
+            if (!userManager.IsInRole(user.Id, "Vendedor"))
+            {
+                userManager.AddToRole(user.Id, "Vendedor");   
+            }
+
         }
 
         private void CreateSuperUser(ApplicationDbContext bd)
@@ -144,10 +156,19 @@ namespace WebPedidos
             {
                 roleManager.Create(new IdentityRole("CreatePed"));
             }
+            if (!roleManager.RoleExists("Despachos"))
+            {
+                roleManager.Create(new IdentityRole("Despachos"));
+            }
+            if (!roleManager.RoleExists("Tesoreria"))
+            {
+                roleManager.Create(new IdentityRole("Tesoreria"));
 
-
-
+            }
+            if (!roleManager.RoleExists("Vendedor"))
+            {
+                roleManager.Create(new IdentityRole("Vendedor"));
+            }
         }
-
-}
+    }
 }

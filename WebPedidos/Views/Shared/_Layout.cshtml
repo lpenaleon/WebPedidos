@@ -28,23 +28,24 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-th-large"></span> Operaciones <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Nuevo Pedido", "NewPedido", "Pedidos")</li>
-                            <li>@Html.ActionLink("Eliminar Un Pedido", "NewPedido", "Pedidos")</li>
+                            <li>@Html.ActionLink("Control de Pedidos", "Index", "PedidosAll")</li>
                             <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("Pedidos Creados ...", "Index", "PedidoEnP")</li>
-                            <li>@Html.ActionLink("Autorizar/Bloquear", "NewPedido", "Pedidos")</li>
-                            <li>@Html.ActionLink("Despacho", "NewPedido", "Pedidos")</li>
-                            <li>@Html.ActionLink("Entrega", "NewPedido", "Pedidos")</li>
+                            <li>@Html.ActionLink("1. Creados"    , "Index", "PedidosCreados")</li>
+                            <li>@Html.ActionLink("2. En Proceso" , "Index", "PedidosEnProceso")</li>
+                            <li>@Html.ActionLink("3. Autorizados", "Index", "PedidoAutorizados")</li>
+                            <li>@Html.ActionLink("4. Bloqueados" , "Index", "PedidosBloqueados")</li>
+                            <li>@Html.ActionLink("5. En despacho", "Index", "PedidosEnDespacho")</li>
+                            <li>@Html.ActionLink("6. Entregos"   , "Index", "PedidosEntregados")</li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-search"></span> Consultas <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("1. Estado de un Pedido", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("1. Estado de un Pedido", "Index", "ConsultaEstados")</li>
                             <li>@Html.ActionLink("2. Ver un Pedido", "Contact", "Home")</li>
                             <li>@Html.ActionLink("3. En un Periodo", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("4. Pedidos de un Cliente", "Contact", "Home")</li>
-                            
+                            <li>@Html.ActionLink("4. Pedidos de un Cliente", "Contact", "Home")</li>               
                         </ul>
                     </li>
 
@@ -58,10 +59,9 @@
                             <li>@Html.ActionLink("Municipios", "Index", "Municipios")</li>
                             <li>@Html.ActionLink("Contacto", "Index", "ContactoClies")</li>
                             <li>@Html.ActionLink("Teléfono", "Index", "Telefonos")</li>
-                            @*<li>@Html.ActionLink("Tipo de Teléfono", "Index", "TipoTels")</li>*@
+                          
                             <li role="separator" class="divider"></li>
-                            @*<li>@Html.ActionLink("Flete", "Index", "Fletes")</li>
-                            <li>@Html.ActionLink("Forma de Pago", "Index", "FormPagos")</li>*@
+   
                             <li>@Html.ActionLink("Emp Transporte", "Index", "EmpTrans")</li>
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("Producto", "Index", "Productos")</li>

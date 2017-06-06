@@ -17,5 +17,6 @@ namespace WebPedidos.Models
         public string NomFlete { get; set; }
         //uno a muchos
         public virtual ICollection<PedFlete> PedFletes { get; set; }
+
     }
 }

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Pedidos en estado: En Despacho</h2>
+<h2>Pedidos en estado: Creado</h2>
 <p></p>
 <table class="table">
     <tr>
@@ -37,14 +37,14 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaPedido)
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DiasCred)
             </td>
             <td>
+                @Html.ActionLink("Cambiar Estado", "Edit", new { id = item.idPedido }, new { @class = "btn btn-xs btn-success" }) |
                 @Html.ActionLink("Detalle", "Details", new { id = item.idPedido }, new { @class = "btn btn-xs btn-default" })
-                @Html.ActionLink("Cierre", "IndexEntPed", new { id = item.idPedido }, new { @class = "btn btn-xs btn-primary" }) |
-                @Html.ActionLink("Estado", "Edit", new { id = item.idPedido }, new { @class = "btn btn-xs btn-success" }) |
             </td>
         </tr>
     }

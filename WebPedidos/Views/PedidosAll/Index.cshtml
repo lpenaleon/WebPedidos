@@ -4,17 +4,18 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Pedidos en estado: Creado</h2>
+<h2>Todos los pedidos en Trámite</h2>
 
-<p></p>
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.idPedido)
         </th>
-
         <th>
-            @Html.DisplayNameFor(model => model.Cliente.NumIde)
+            @Html.DisplayNameFor(model => model.Cliente.NomClie)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FormPago.NomFPago)
@@ -25,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DiasCred)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrdenEstado)
+        </th>
         <th></th>
     </tr>
 
@@ -33,7 +37,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.idPedido)
         </td>
-
         <td>
             @Html.DisplayFor(modelItem => item.Cliente.NomClie)
         </td>
@@ -47,10 +50,13 @@
             @Html.DisplayFor(modelItem => item.DiasCred)
         </td>
         <td>
-            @Html.ActionLink("Cambiar Estado", "Edit", new { id=item.idPedido }) |
-            @Html.ActionLink("Detalle", "Details", new { id=item.idPedido }) |
+            @Html.DisplayFor(modelItem => item.OrdenEstado)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.idPedido }) |*@
+            @Html.ActionLink("Details", "Details", new { id=item.idPedido },new { @class = "btn btn-xs btn-default" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idPedido }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }
-
 </table>

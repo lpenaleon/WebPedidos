@@ -10,27 +10,26 @@ using WebPedidos.Models;
 
 namespace WebPedidos.Controllers
 {
-    public class PedidosEntregadosController : Controller
+    public class PedidosAllController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
 
-        // GET: PedidosEntregados
-        [Authorize(Roles = "Despachos")]
+        // GET: PedidosAll
+        [Authorize(Roles = "Vendedor")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos
-                .Include(p => p.Cliente)
-                .Include(p => p.FormPago);
+                 .Include(p => p.Cliente)
+                 .Include(p => p.FormPago);
 
             var pedidos = pedido1
-                .Where(p => p.OrdenEstado == OrdenEstado.Entregada)
+                .Where(p => p.OrdenEstado < OrdenEstado.Entregada)
                 .OrderBy(p => p.idPedido);
 
             return View(pedidos.ToList());
         }
 
-        // GET: PedidoEnP/Details/5
-        [Authorize(Roles = "Despachos")]
+        [Authorize(Roles = "Vendedor")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -62,9 +61,7 @@ namespace WebPedidos.Controllers
             return View(pedDet.ToList());
         }
 
-
-        // GET: PedidosEntregados/Create
-        [Authorize(Roles = "Admin")]
+        // GET: PedidosAll/Create
         public ActionResult Create()
         {
             ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde");
@@ -72,7 +69,7 @@ namespace WebPedidos.Controllers
             return View();
         }
 
-        // POST: PedidosEntregados/Create
+        // POST: PedidosAll/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -83,17 +80,6 @@ namespace WebPedidos.Controllers
             {
                 db.Pedidos.Add(pedido);
                 db.SaveChanges();
-
-                var estado = new Estado
-                {
-                    idPedido = pedido.idPedido,
-                    FechaEstado = DateTime.Now,
-                    OrdenEstado = pedido.OrdenEstado,
-                    Nota = ""
-                };
-                db.Estados.Add(estado);
-                db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
@@ -102,8 +88,7 @@ namespace WebPedidos.Controllers
             return View(pedido);
         }
 
-        // GET: PedidosEntregados/Edit/5
-        [Authorize(Roles = "Despachos")]
+        // GET: PedidosAll/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -120,7 +105,7 @@ namespace WebPedidos.Controllers
             return View(pedido);
         }
 
-        // POST: PedidosEntregados/Edit/5
+        // POST: PedidosAll/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -138,7 +123,7 @@ namespace WebPedidos.Controllers
             return View(pedido);
         }
 
-        // GET: PedidosEntregados/Delete/5
+        // GET: PedidosAll/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(long? id)
         {
@@ -154,7 +139,7 @@ namespace WebPedidos.Controllers
             return View(pedido);
         }
 
-        // POST: PedidosEntregados/Delete/5
+        // POST: PedidosAll/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)

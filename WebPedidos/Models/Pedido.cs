@@ -11,11 +11,13 @@ namespace WebPedidos.Models
     public class Pedido
     {
         [Key]
+        [Display(Name = "Pedido")]
         public long idPedido { get; set; }
 
-        [Required(ErrorMessage ="Debe ingresar una {0}")]
-        //[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
+        //[Required(ErrorMessage ="Debe ingresar una {0}")]
+        // [DataType(DataType.Date)]
+        [Display(Name = "Fecha Pedido")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaPedido { get; set; }
         
         [NotMapped]
@@ -37,15 +39,18 @@ namespace WebPedidos.Models
         public decimal Tot_Acu { get; set; }
 
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
-        [Display(Name = "Días de Credito")]
+        [Display(Name = "Días de Crédito")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public byte DiasCred { get; set; }
 
+        [Display(Name = "Cliente")]
         public int idCliente { get; set; }
 
+        [Display(Name = "Forma Pago")]
         public int idFormPago { get; set; }
 
+        [Display(Name = "Estado")]
         public OrdenEstado OrdenEstado { get; set; }
 
         //Muchos a uno

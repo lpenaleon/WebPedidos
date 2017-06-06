@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidosEnDespacho
+        [Authorize(Roles = "Despachos")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos
@@ -28,7 +29,8 @@ namespace WebPedidos.Controllers
             return View(pedidos.ToList());
         }
 
-        // GET: PedidosEnDespacho/Details/5
+        // GET: PedidoEnP/Details/5
+        [Authorize(Roles = "Despachos")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -40,37 +42,28 @@ namespace WebPedidos.Controllers
             {
                 return HttpNotFound();
             }
-            return View(pedido);
-        }
 
-        // GET: PedidosEnDespacho/Create
-        public ActionResult Create()
-        {
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde");
-            ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago");
-            return View();
-        }
+            var pedDet0 = db.PedidoDets
+                .Include(pd => pd.Producto)
+                .OrderBy(pd => pd.idPedidoDet);
 
-        // POST: PedidosEnDespacho/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idPedido,FechaPedido,DiasCred,idCliente,idFormPago,OrdenEstado")] Pedido pedido)
-        {
-            if (ModelState.IsValid)
+            var pedDet = pedDet0
+                .Where(p => p.idPedido == id);
+
+            decimal TotPre = 0;
+
+            foreach (var items in pedDet)
             {
-                db.Pedidos.Add(pedido);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                TotPre = items.PrecioT + TotPre;
             }
 
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", pedido.idCliente);
-            ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago", pedido.idFormPago);
-            return View(pedido);
+            ViewBag.Tot_Pre = string.Format("{0:C2}", TotPre);
+
+            return View(pedDet.ToList());
         }
 
         // GET: PedidosEnDespacho/Edit/5
+        [Authorize(Roles = "Despachos")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -98,6 +91,17 @@ namespace WebPedidos.Controllers
             {
                 db.Entry(pedido).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var estado = new Estado
+                {
+                    idPedido = pedido.idPedido,
+                    FechaEstado = DateTime.Now,
+                    OrdenEstado = pedido.OrdenEstado,
+                    Nota = ""
+                };
+                db.Estados.Add(estado);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", pedido.idCliente);
@@ -105,8 +109,13 @@ namespace WebPedidos.Controllers
             return View(pedido);
         }
 
-        // GET: PedidosEnDespacho/Delete/5
-        public ActionResult Delete(long? id)
+        //**********************************************************************
+        //**********************************************************************
+        //**********************************************************************
+
+        // GET: PedidoEnP/Details/5
+        [Authorize(Roles = "Despachos")]
+        public ActionResult IndexEntPed(long? id)
         {
             if (id == null)
             {
@@ -117,16 +126,139 @@ namespace WebPedidos.Controllers
             {
                 return HttpNotFound();
             }
-            return View(pedido);
+
+            var pedDet0 = db.PedidoDets
+                .Include(pd => pd.Producto)
+                .OrderBy(pd => pd.idPedidoDet);
+
+            var pedFletes = db.PedFletes
+                .Include(p => p.Flete)
+                .Include(p => p.EmpTran)
+                .Include(p => p.Pedido)
+                .Where(p => p.idPedido == id);
+
+            return View(pedFletes.ToList());   
         }
 
-        // POST: PedidosEnDespacho/Delete/5
+        // GET: PedFletes/Details/5
+        [Authorize(Roles = "Despachos")]
+        public ActionResult DetailsEntPed(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //PedFlete pedFlete = db.PedFletes.Find(id);
+
+            var pedFlete = db.PedFletes
+                .Include(p => p.Flete)
+                .Include(p => p.EmpTran)
+                .Include(p => p.Pedido)
+                .Where(p => p.idPedido == id);
+
+          //  PedFlete pedFlete = pedFletes.ToList();
+
+            if (pedFlete == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pedFlete);
+        }
+
+        // GET: PedFletes/Create
+        [Authorize(Roles = "Despachos")]
+        public ActionResult CreateEntPed()
+        {
+            ViewBag.idEmpTran = new SelectList(db.EmpTrans, "idEmpTran", "NomEmpTran");
+            ViewBag.idPedido = new SelectList(db.Pedidos, "idPedido", "idPedido");
+            return View();
+        }
+
+        // POST: PedFletes/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEnt([Bind(Include = "idPedFlete,idPedido,idFlete,idEmpTran,Valor,Obervaciones")] PedFlete pedFlete)
+        {
+            if (ModelState.IsValid)
+            {
+                db.PedFletes.Add(pedFlete);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.idEmpTran = new SelectList(db.EmpTrans, "idEmpTran", "NomEmpTran", pedFlete.idEmpTran);
+            ViewBag.idPedido = new SelectList(db.Pedidos, "idPedido", "idPedido", pedFlete.idPedido);
+            return View(pedFlete);
+        }
+
+        // GET: PedFletes/Edit/5
+        [Authorize(Roles = "Despachos")]
+        public ActionResult EditEntPed(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PedFlete pedFlete = db.PedFletes.Find(id);
+            if (pedFlete == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idEmpTran = new SelectList(db.EmpTrans, "idEmpTran", "NomEmpTran", pedFlete.idEmpTran);
+            ViewBag.idFlete = new SelectList(db.Fletes, "idFlete", "NomFlete", pedFlete.idFlete);
+            ViewBag.idPedido = new SelectList(db.Pedidos, "idPedido", "idPedido", pedFlete.idPedido);
+            return View(pedFlete);
+        }
+
+        // POST: PedFletes/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEntPed([Bind(Include = "idPedFlete,idPedido,idFlete,idEmpTran,Valor,Obervaciones")] PedFlete pedFlete)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(pedFlete).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("IndexEndPed", pedFlete);
+            }
+            ViewBag.idEmpTran = new SelectList(db.EmpTrans, "idEmpTran", "NomEmpTran", pedFlete.idEmpTran);
+            ViewBag.idFlete = new SelectList(db.Fletes, "idFlete", "NomFlete", pedFlete.idFlete);
+            ViewBag.idPedido = new SelectList(db.Pedidos, "idPedido", "idPedido", pedFlete.idPedido);
+            return View(pedFlete);
+
+  
+
+            
+        }
+
+        // GET: PedFletes/Delete/5
+        [Authorize(Roles = "Despachos")]
+        public ActionResult DeleteEntPed(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PedFlete pedFlete = db.PedFletes.Find(id);
+            if (pedFlete == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pedFlete);
+        }
+
+        // POST: PedFletes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteEntPed(long id)
         {
-            Pedido pedido = db.Pedidos.Find(id);
-            db.Pedidos.Remove(pedido);
+            PedFlete pedFlete = db.PedFletes.Find(id);
+            db.PedFletes.Remove(pedFlete);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

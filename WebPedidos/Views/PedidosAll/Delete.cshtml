@@ -4,25 +4,27 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Esta seguro de querer Eliminar este Pedido ? </h3>
 <div>
-    <h4>Pedido</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Cliente.NumIde)
+            @Html.DisplayNameFor(model => model.idPedido)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Cliente.NumIde)
+            @Html.DisplayFor(model => model.idPedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.NomClie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.NomClie)
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.FormPago.NomFPago)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.FormPago.NomFPago)
         </dd>
@@ -30,7 +32,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.FechaPedido)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.FechaPedido)
         </dd>
@@ -38,7 +39,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.DiasCred)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.DiasCred)
         </dd>
@@ -46,7 +46,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.OrdenEstado)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.OrdenEstado)
         </dd>
@@ -57,8 +56,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+            @Html.ActionLink("Back to List", "Index", new { },new { @class="btn btn-default" })
         </div>
     }
 </div>

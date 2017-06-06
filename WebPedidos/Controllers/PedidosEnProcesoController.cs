@@ -15,6 +15,7 @@ namespace WebPedidos.Controllers
        private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidoEnP
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos
@@ -29,6 +30,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -61,6 +63,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(long id)
         {
             long codPed = 0;
@@ -92,25 +95,19 @@ namespace WebPedidos.Controllers
             {
                 db.Entry(pedido).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var estado = new Estado
+                {
+                    idPedido = pedido.idPedido,
+                    FechaEstado = DateTime.Now,
+                    OrdenEstado = pedido.OrdenEstado,
+                    Nota = "Contabilidad / Tesorería"
+                };
+                db.Estados.Add(estado);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
-            //    var buscar = Pedidos.OrdenEstado
-
-            var idOE = Request["OerdeEstado"];
-
-            //var estado = new Estado
-            //{
-            //    idPedido = id,
-            //    FechaEstado = DateTime.Now,
-            //    OrdenEstado = idOE
-            //    nom
-            //};
-            //db.Estados.Add(estado);
-            //db.SaveChanges();
-
-
-
 
             ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NomClie", pedido.idCliente);
             ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago", pedido.idFormPago);

@@ -10,11 +10,12 @@ using WebPedidos.Models;
 
 namespace WebPedidos.Controllers
 {
-    public class PedidoEnPController : Controller
+    public class PedidosCreadosController : Controller
     {
         private WebPedidosContext db = new WebPedidosContext();
 
-        // GET: PedidoEnP
+        // GET: PedidosCreados
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var pedido0 = db.Pedidos
@@ -29,6 +30,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -61,6 +63,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(long id)
         {
             long codPed = 0;
@@ -86,31 +89,26 @@ namespace WebPedidos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
        public ActionResult Edit([Bind(Include = "idPedido,FechaPedido,DiasCred,idCliente,idFormPago,OrdenEstado")] Pedido pedido)
-  //      public ActionResult Edit([Bind(Include = "idPedido,OrdenEstado")] Pedido pedido)
+     //  public ActionResult Edit([Bind(Include = "idPedido,DiasCred,idCliente,idFormPago,OrdenEstado")] Pedido pedido)
+        //      public ActionResult Edit([Bind(Include = "idPedido,OrdenEstado")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(pedido).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var estado = new Estado
+                {
+                    idPedido = pedido.idPedido,
+                    FechaEstado = DateTime.Now,
+                    OrdenEstado = pedido.OrdenEstado,
+                    Nota = "Dirección Comercial"
+                };
+                db.Estados.Add(estado);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
-            //    var buscar = Pedidos.OrdenEstado
-
-            var idOE = Request["OrderEstado"];
-
-            //var estado = new Estado
-            //{
-            //    idPedido = id,
-            //    FechaEstado = DateTime.Now,
-            //    OrdenEstado = idOE
-            //    nom
-            //};
-            //db.Estados.Add(estado);
-            //db.SaveChanges();
-
-
-
 
             ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NomClie", pedido.idCliente);
             ViewBag.idFormPago = new SelectList(db.FormPagos, "idFormPago", "NomFPago", pedido.idFormPago);
