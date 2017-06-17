@@ -38,45 +38,13 @@ namespace WebPedidos
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var user = userManager.FindByName("leonardop_leon@outlook.com");
 
-            if (!userManager.IsInRole(user.Id, "View"))
-            {
-                userManager.AddToRole(user.Id, "View");
-            }
-            if (!userManager.IsInRole(user.Id, "Create"))
-            {
-                userManager.AddToRole(user.Id, "Create");
-            }
-            if (!userManager.IsInRole(user.Id, "Edit"))
-            {
-                userManager.AddToRole(user.Id, "Edit");
-            }
-            if (!userManager.IsInRole(user.Id, "Delete"))
-            {
-                userManager.AddToRole(user.Id, "Delete");
-            }
-            if (!userManager.IsInRole(user.Id, "Users"))
-            {
-                userManager.AddToRole(user.Id, "Users");
-            }
             if (!userManager.IsInRole(user.Id, "Admin"))
             {
                 userManager.AddToRole(user.Id, "Admin");
             }
-            if (!userManager.IsInRole(user.Id, "ViewClie"))
+            if (!userManager.IsInRole(user.Id, "Cliente"))
             {
-                userManager.AddToRole(user.Id, "ViewClie");
-            }
-            if (!userManager.IsInRole(user.Id, "ViewETrans"))
-            {
-                userManager.AddToRole(user.Id, "ViewETrans");
-            }
-            if (!userManager.IsInRole(user.Id, "ViewMuni"))
-            {
-                userManager.AddToRole(user.Id, "ViewMuni");
-            }
-            if (!userManager.IsInRole(user.Id, "CreatePed"))
-            {
-                userManager.AddToRole(user.Id, "CreatePed");
+                userManager.AddToRole(user.Id, "Cliente");
             }
             if (!userManager.IsInRole(user.Id, "Tesoreria"))
             {
@@ -113,48 +81,13 @@ namespace WebPedidos
             //permitir manipular los roles
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             //Crear Roles
-            if (!roleManager.RoleExists("View"))
-            {
-                roleManager.Create(new IdentityRole("View"));
-            }
-
-            if (!roleManager.RoleExists("Create"))
-            {
-                roleManager.Create(new IdentityRole("Create"));
-            }
-
-            if (!roleManager.RoleExists("Edit"))
-            {
-                roleManager.Create(new IdentityRole("Edit"));
-            }
-
-            if (!roleManager.RoleExists("Delete"))
-            {
-                roleManager.Create(new IdentityRole("Delete"));
-            }
-            if (!roleManager.RoleExists("Users"))
-            {
-                roleManager.Create(new IdentityRole("Users"));
-            }
             if (!roleManager.RoleExists("Admin"))
             {
                 roleManager.Create(new IdentityRole("Admin"));
             }
-            if (!roleManager.RoleExists("ViewClie"))
+            if (!roleManager.RoleExists("Cliente"))
             {
-                roleManager.Create(new IdentityRole("ViewClie"));
-            }
-            if (!roleManager.RoleExists("ViewETrans"))
-            {
-                roleManager.Create(new IdentityRole("ViewETrans"));
-            }
-            if (!roleManager.RoleExists("ViewMuni"))
-            {
-                roleManager.Create(new IdentityRole("ViewMuni"));
-            }
-            if (!roleManager.RoleExists("CreatePed"))
-            {
-                roleManager.Create(new IdentityRole("CreatePed"));
+                roleManager.Create(new IdentityRole("Cliente"));
             }
             if (!roleManager.RoleExists("Despachos"))
             {
@@ -163,7 +96,6 @@ namespace WebPedidos
             if (!roleManager.RoleExists("Tesoreria"))
             {
                 roleManager.Create(new IdentityRole("Tesoreria"));
-
             }
             if (!roleManager.RoleExists("Vendedor"))
             {

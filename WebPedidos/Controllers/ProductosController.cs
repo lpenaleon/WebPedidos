@@ -9,6 +9,7 @@ using WebPedidos.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace WebPedidos.Controllers
 {
@@ -17,7 +18,9 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
-        [Authorize (Roles = "View")]
+        //*********************************************************
+        //*********************************************************
+        [Authorize(Roles = "Admin,Cliente,Vendedor,Despacho")]
         // GET: Productos
         public ActionResult Index(int? page = null)
         {
@@ -30,8 +33,30 @@ namespace WebPedidos.Controllers
 
             return View(productos.ToPagedList((int)page, 8));
         }
+        //*********************************************************
+        // POST: Productos
+        [HttpPost]
+        public ActionResult Index(string BuscadorP, int? page, int? page1 = 0)
+        {
 
-        // GET: Productos/Details/5
+           page = (page ?? 1);
+
+            var productos = db.Productos
+                .Include(p => p.Maquinas)
+                .Include(p => p.Marcas)                
+                .OrderBy(p => p.Descripcion)
+                .Where(p => p.Descripcion.Contains(BuscadorP) || p.Maquinas.NomMaquina.Contains(BuscadorP) || p.Marcas.NomMarca.Contains(BuscadorP))
+                .ToList();
+            var nreg = productos.Count();
+            if (nreg==0)
+            {
+                nreg = 1;
+            }
+            return View(productos.ToPagedList((int)page, nreg));
+        }
+        //*********************************************************
+        //*********************************************************
+        // GET: Productos/Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +73,7 @@ namespace WebPedidos.Controllers
 
 
         // GET: Productos/Create
-        [Authorize(Roles = "Create")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.idMaquina = new SelectList(db.Maquinas, "IdMaquina", "NomMaquina");
@@ -132,7 +157,7 @@ namespace WebPedidos.Controllers
             };
         }
         // GET: Productos/Edit/5
-        [Authorize(Roles = "Edit")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -232,7 +257,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: Productos/Delete/5
-        [Authorize (Roles = "Delete")]
+        [Authorize (Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -26,8 +26,7 @@ namespace WebPedidos.Controllers
 
         }
 
-
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var estados = db.Estados.Include(e => e.Pedido);

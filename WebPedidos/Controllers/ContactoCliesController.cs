@@ -1,5 +1,4 @@
-﻿using PagedList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,13 +14,11 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
-        [Authorize(Roles = "Admin")]
         // GET: ContactoClies
-        public ActionResult Index(int? page = null)
+        public ActionResult Index()
         {
-            page = (page ?? 1);
-            var contClies = db.ContactoClies.OrderBy(CC => CC.NomContacto).Include(cl => cl.Cliente);
-            return View(contClies.ToPagedList((int)page, 8));
+            var contactoClies = db.ContactoClies.Include(c => c.Cliente);
+            return View(contactoClies.ToList());
         }
 
         // GET: ContactoClies/Details/5
@@ -42,7 +39,7 @@ namespace WebPedidos.Controllers
         // GET: ContactoClies/Create
         public ActionResult Create()
         {
-            ViewBag.idCliente = new SelectList(db.Clientes.OrderBy(cl =>cl.NomClie),"idCliente", "NomClie");
+            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde");
             return View();
         }
 
@@ -60,7 +57,7 @@ namespace WebPedidos.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NomClie", contactoClie.idCliente);
+            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", contactoClie.idCliente);
             return View(contactoClie);
         }
 
@@ -76,7 +73,7 @@ namespace WebPedidos.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "ideNIT", contactoClie.idCliente);
+            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", contactoClie.idCliente);
             return View(contactoClie);
         }
 
@@ -85,7 +82,7 @@ namespace WebPedidos.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idContactoClie,idCliente,NomContacto,Email")] ContactoClie contactoClie)
+        public ActionResult Edit([Bind(Include = "idContactoClie,NomContacto,Email,idCliente")] ContactoClie contactoClie)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +90,7 @@ namespace WebPedidos.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "ideNIT", contactoClie.idCliente);
+            ViewBag.idCliente = new SelectList(db.Clientes, "idCliente", "NumIde", contactoClie.idCliente);
             return View(contactoClie);
         }
 

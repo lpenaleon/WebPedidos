@@ -15,7 +15,7 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidosAll
-        [Authorize(Roles = "Vendedor")]
+        [Authorize(Roles = "Admin,Vendedor")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos

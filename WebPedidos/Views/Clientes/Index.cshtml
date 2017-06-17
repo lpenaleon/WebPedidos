@@ -6,6 +6,16 @@
 
 <h2>Registro de Clientes</h2>
 
+@* se añade*@
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.TextBox("BuscadorC", null, new { @class = "form-control", @placeholder = "Descripción del Producto y presione Enter" })
+}
+<p></p>
+<hr />
+@* fin del añadido*@
+
 <p>
     @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
@@ -29,6 +39,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Municipio.NomMunicipio)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
@@ -58,11 +71,14 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Municipio.NomMunicipio)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
                 @Html.ActionLink("Modificar", "Edit", new { id = item.idCliente }, new { @class = "btn btn-xs btn-success" }) |
-                @Html.ActionLink("Detalle", "Details", new { id = item.idCliente }, new { @class = "btn btn-xs btn-default" }) |
+                @Html.ActionLink("Contactos", "IndexCont", new { id = item.idCliente }, new { @class = "btn btn-xs btn-default" }) |
                 @Html.ActionLink("Eliminar", "Delete", new { id = item.idCliente }, new { @class = "btn btn-xs btn-danger" })
             </td>
         </tr>

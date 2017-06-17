@@ -15,7 +15,7 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidosBloqueados
-        [Authorize(Roles = "Tesoreria")]
+        [Authorize(Roles = "Admin,Tesoreria")]
         public ActionResult Index()
         {
             var pedido1 = db.Pedidos
@@ -30,7 +30,6 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Details/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)

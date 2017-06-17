@@ -4,6 +4,15 @@
     ViewBag.Title = "Index";
 }
 <h2>Productos</h2>
+@* se añade*@
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.TextBox("BuscadorP", null, new { @class = "form-control", @placeholder = "Descripción del Producto y presione Enter" })
+}
+<p></p>
+<hr />
+@* fin del añadido*@
 <p>
     @Html.ActionLink("Crear un Nuevo", "Create", new { }, new { @class = "btn btn-sm btn-primary" })
 </p>

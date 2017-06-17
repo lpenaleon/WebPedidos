@@ -1,0 +1,187 @@
+﻿@model IEnumerable<WebPedidos.Models.Pedido>
+
+@{
+    ViewBag.Title = "modal";
+}
+
+<h3>Consulta Pedidos de un Periodo</h3>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="form-horizontal">
+        @*<h4>Cliente</h4>*@
+        <hr />
+        <div class="form-group">
+            <div class="col-md-2">
+                <h4>Fecha Inicial</h4>
+            </div>
+            <div class="col-md-3">
+
+                @Html.TextBox("FechIni", null, new { @class = "form-control", @placeholder = "Digite el Id del pedido y presione ENTER" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+                <h4>Fecha Final</h4>
+            </div>
+            <div class="col-md-3">
+                @Html.TextBox("FechFin", null, new { @class = "form-control", @placeholder = "Digite el Id del pedido y presione ENTER" })
+            </div>
+        </div>
+ 
+    
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+@if (Model.Count() != 0)
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.NomClie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormPago.NomFPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasCred)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdenEstado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.Empleado.Nombre)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaPedido)
+                </td>                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.NomClie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormPago.NomFPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiasCred)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrdenEstado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Empleado.Nombre)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.idPedido }, new { @class = "btn btn-sm btn-default" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#FechIni").datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+
+            $("#FechFin").datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>
+}
+
+
+
+
+@*<p></p>
+<br>
+<div class="form-horizontal">
+  
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#FechIni").datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+
+            $("#FechFin").datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>    
+}*@
+
+
+
+

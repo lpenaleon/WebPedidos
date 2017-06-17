@@ -12,27 +12,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Empleados.Nombre)
+            @Html.DisplayNameFor(model => model.Empleado.Nombre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Empleados.Nombre)
+            @Html.DisplayFor(model => model.Empleado.Nombre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Municipios.NomMunicipio)
+            @Html.DisplayNameFor(model => model.Municipio.NomMunicipio)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Municipios.NomMunicipio)
+            @Html.DisplayFor(model => model.Municipio.NomMunicipio)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoIdes.NomTipoIde)
+            @Html.DisplayNameFor(model => model.TipoIde.NomTipoIde)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TipoIdes.NomTipoIde)
+            @Html.DisplayFor(model => model.TipoIde.NomTipoIde)
         </dd>
 
         <dt>
@@ -73,7 +73,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary" /> |
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
             @Html.ActionLink("Volver a la Lista", "Index",new { },new { @class="btn btn-default"})
         </div>
     }

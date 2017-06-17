@@ -1,0 +1,50 @@
+﻿@model WebPedidos.Models.ContactoClie
+
+@{
+    ViewBag.Title = "DeleteCont";
+}
+
+<h2>Delete</h2>
+
+<h3>Esta seguro de querer borrar este registro?</h3>
+<div>
+    <h4>ContactoClie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.NumIde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.NumIde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomContacto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomContacto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la Lista", "Index",new { id = Model.idCliente },new { @class= "btn btn-default" })
+        </div>
+    }
+</div>
+

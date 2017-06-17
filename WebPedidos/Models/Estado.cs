@@ -17,7 +17,7 @@ namespace WebPedidos.Models
 
         [Required(ErrorMessage = "Debe ingresar una {0}")]
         //[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaEstado { get; set; }
 
         [Display(Name = "Estado")]

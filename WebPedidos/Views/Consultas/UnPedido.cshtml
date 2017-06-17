@@ -1,0 +1,76 @@
+﻿@model IEnumerable <WebPedidos.Models.Pedido>
+
+@{
+    ViewBag.Title = "Un Pedido";
+}
+
+<h3>Consulta un Pedido</h3>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.TextBox("IdPedido", null, new { @class = "form-control", @placeholder = "Digite el Id del pedido y presione ENTER" })
+}
+<p></p>
+
+@if (Model.Count() != 0)
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idPedido)         
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.NomClie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormPago.NomFPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasCred)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdenEstado)
+            </th>
+        </tr>
+    
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.NomClie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormPago.NomFPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiasCred)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrdenEstado)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.idPedido }, new { @class = "btn btn-sm btn-default" })
+                </td> 
+            </tr>
+        }
+    </table>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+        });
+    </script>
+}
+

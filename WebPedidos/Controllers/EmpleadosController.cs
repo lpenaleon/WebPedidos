@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -14,11 +16,13 @@ namespace WebPedidos.Controllers
     {
         private WebPedidosContext db = new WebPedidosContext();
 
+        private ApplicationDbContext userContext = new ApplicationDbContext();
+
         [Authorize(Roles = "Admin")]
         // GET: Empleados
         public ActionResult Index()
         {
-            var empleados = db.Empleados.OrderBy(em => em.Apellidos+em.Nombre).Include(e => e.Cargo);
+            var empleados = db.Empleados.Include(e => e.Cargo);
             return View(empleados.ToList());
         }
 
@@ -49,15 +53,30 @@ namespace WebPedidos.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idEmpleado,Nombre,Apellidos,idCargo")] Empleado empleado)
+        public ActionResult Create([Bind(Include = "idEmpleado,Nombre,Apellidos,Email,idCargo")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
                 db.Empleados.Add(empleado);
                 db.SaveChanges();
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+
+                var userAsp = userManager.FindByEmail(empleado.Email);
+
+                if (userAsp == null)
+                {
+                    userAsp = new ApplicationUser
+                    {
+                        Email = empleado.Email,
+                        UserName = empleado.Email,
+                    };
+
+                    userManager.Create(userAsp,empleado.Email);
+                }
+                userManager.AddToRole(userAsp.Id, "Cliente");
                 return RedirectToAction("Index");
             }
-
             ViewBag.idCargo = new SelectList(db.Cargos, "idCargo", "NomCargo", empleado.idCargo);
             return View(empleado);
         }
@@ -83,7 +102,7 @@ namespace WebPedidos.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idEmpleado,Nombre,Apellidos,idCargo")] Empleado empleado)
+        public ActionResult Edit([Bind(Include = "idEmpleado,Nombre,Apellidos,Email,idCargo")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {

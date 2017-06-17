@@ -15,9 +15,11 @@ namespace WebPedidos.Controllers
         private WebPedidosContext db = new WebPedidosContext();
 
         // GET: PedidosEntregados
-        [Authorize(Roles = "Despachos")]
+        [Authorize(Roles = "Admin,Despachos")]
         public ActionResult Index()
         {
+            
+
             var pedido1 = db.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.FormPago);
@@ -30,7 +32,7 @@ namespace WebPedidos.Controllers
         }
 
         // GET: PedidoEnP/Details/5
-        [Authorize(Roles = "Despachos")]
+        [Authorize(Roles = "Admin,Despachos")]
         public ActionResult Details(long? id)
         {
             if (id == null)

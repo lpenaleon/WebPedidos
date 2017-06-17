@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebPedidos.Models.ContactoClie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear uno Nuevo", "CreateCont", new {}, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Volver a la lista", "IndexCont", new {}, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.NumIde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomContacto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.NumIde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomContacto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCont", new { id = item.idContactoClie },new { @class= "btn btn-xs btn-success" }) |
+                @Html.ActionLink("Teléfonos", "IndexTel", new { id = item.idContactoClie }, new { @class = "btn btn-xs btn-default" }) |
+                @Html.ActionLink("Delete", "DeleteCont", new { id = item.idContactoClie }, new { @class = "btn btn-xs btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

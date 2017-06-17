@@ -25,7 +25,7 @@ namespace WebPedidos.Models
       
         [Required(ErrorMessage = ("El campo {0} es requerido"))]
         [Display(Name = "Contacto")]
-        public Int32 idContactoCli { get; set; }
+        public int idContactoClie { get; set; }
 
         public virtual TipoTel TipoTels { get; set; }//Muchos a uno
         public virtual ContactoClie ContactoClies { get; set; }//Muchos a uno
