@@ -75,7 +75,7 @@ namespace WebPedidos
                 userManager.Create(user, "Papscasslpl121211.");
             }
         }
-
+        
         private void CreateRoles(ApplicationDbContext db)
         {
             //permitir manipular los roles

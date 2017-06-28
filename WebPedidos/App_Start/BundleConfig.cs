@@ -21,13 +21,15 @@ namespace WebPedidos
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/moment.js",
-                      "~/Scripts/bootstrap-datetimepicker.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/particles.js",
+                      "~/Scripts/app.js",
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/alto.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-datetimepicker.css",
+                      "~/Content/css/estilos.css",
+                      "~/Content/css/sliderparticulas.css",
                       "~/Content/site.css"));
         }
     }
