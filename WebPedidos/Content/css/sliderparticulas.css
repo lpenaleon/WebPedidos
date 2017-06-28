@@ -1,0 +1,15 @@
+﻿/*Incluir clase para el fondo*/
+#particles-js{
+	background:url(../../Imagenes/img/fondo.jpg);
+	/*Imágen centrada*/
+	/*background-position: center;*/
+	/*Proporción fija*/
+	/*background-attachment:local;*/
+	/*Cover: Para tomar el mismo tamaño del contenedor*/
+	background-size: cover;
+    /*height: 500px;*/
+	width: 100%;    
+	
+}
+
+

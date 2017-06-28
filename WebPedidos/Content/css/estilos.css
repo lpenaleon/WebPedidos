@@ -1,0 +1,120 @@
+﻿/*body {
+    background:#082330;
+    background-size: .12em 100%;
+    font: 16em/1 Arial;
+}*/
+
+
+.ksirtet {
+   /*Centrado de imagen en css con div */    
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border: 2px solid red;   
+    /*Tamaño de fondo expandido*/
+    background-color:blueviolet;
+    border-radius: 6px;
+    opacity: .6;    
+    -webkit-transition: all .6s ease;
+    transition: all .6s ease;
+}
+
+    /*movimiento a la imagen*/
+    .ksirtet:hover {
+        opacity: 1;
+        border-radius: 100px;
+        /*propiedad scale para aumentar la imagen y rotate para la rotación*/
+        transform: scale(1.0) rotate(360deg);
+        /*Resplandor alrededor de la imagen rojo*/
+        box-shadow: 10px 10px 5px 0px rgba(0,245,78,1);
+    }
+
+.letra1 {
+    color: #97ea42;
+    font-family: 'Times New Roman', Times, serif;
+    text-align:center;
+}
+
+.letra2 {
+    color: #44bf12;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.letra3 {
+    color: #0f54cc;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.letra4 {
+    text-shadow: yellow;
+    color: #97ea42;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/*.jumbotron{
+    
+    width:100%;
+    height: 350px;
+    background-color:#015fff;
+}*/
+
+/*Estilo index letra "Sistema Gestión De Pedidos"*/
+/*.prueba2{
+    color: red;
+    font-size:50px;
+}*/
+
+.elcontenedorderegreso{ 
+    padding-top:30px;
+    margin-bottom: 300px; 
+    /*left: 450px;*/
+}
+
+/*Cambio de color por encima de las letras*/
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #000000;
+    background-color: #77C9D4;
+}
+
+/*Cambio de color por encima del menú despegable*/
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #77C9D4;
+}
+
+/*@media screen and (max-width: 750px) {
+    .jumbotron,body {
+        transition: 2s;
+        width: 100%;
+        height: 150%;
+        margin-top: 10px;*/
+/*asignación de caja al volverse responsive color azul*/
+/*background-color: #015fff;
+    }
+}*/
+
+/*responsive*/
+/*tamaño tablet*/
+@media (max-width: 768px) {
+    .jumbotron, body {
+        width: 75%;
+    }
+}
+/*tamaño celular*/
+@media (max-width: 768px) {
+    body {
+        width: 95%;
+    }
+}
+/*Cambia el estilo de una caja al pasar el ratón sobre encima de ella*/
+ .ksirtet:hover {
+    transition: .8s;
+    background-color: #015fff;
+}
+
+ h2{
+     text-align:center;
+ }
